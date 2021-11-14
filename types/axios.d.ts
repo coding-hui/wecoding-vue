@@ -1,5 +1,7 @@
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
 
+export type SuccessMessageMode = 'none' | 'success' | 'error' | undefined;
+
 export interface RequestOptions {
   // Splicing request parameters to url
   joinParamsToUrl?: boolean;
@@ -18,6 +20,8 @@ export interface RequestOptions {
   urlPrefix?: string;
   // Error message prompt type
   errorMessageMode?: ErrorMessageMode;
+  // 成功消息提示类型
+  successMessageMode?: SuccessMessageMode;
   // Whether to add a timestamp
   joinTime?: boolean;
   ignoreCancelToken?: boolean;
@@ -26,9 +30,10 @@ export interface RequestOptions {
 }
 
 export interface Result<T = any> {
-  code: number;
+  errorCode: string;
+  success: boolean;
   type: 'success' | 'error' | 'warning';
-  message: string;
+  errorMessage: string;
   result: T;
 }
 

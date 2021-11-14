@@ -369,13 +369,13 @@
     }
 
     .ant-table-wrapper {
-      padding: 6px;
+      padding: 16px;
       background-color: @component-background;
       border-radius: 2px;
 
       .ant-table-title {
         min-height: 40px;
-        padding: 0 0 8px !important;
+        padding: 0 0 16px !important;
       }
 
       .ant-table.ant-table-bordered .ant-table-title {

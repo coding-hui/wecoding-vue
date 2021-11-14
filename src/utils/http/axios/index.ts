@@ -8,13 +8,13 @@ import { VAxios } from './Axios';
 import { checkStatus } from './checkStatus';
 import { useGlobSetting } from '/@/hooks/setting';
 import { useMessage } from '/@/hooks/web/useMessage';
-import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
+import { ContentTypeEnum, RequestEnum, ResultEnum } from '/@/enums/httpEnum';
 import { isString } from '/@/utils/is';
 import { getToken } from '/@/utils/auth';
-import { setObjToUrlParams, deepMerge } from '/@/utils';
+import { deepMerge, setObjToUrlParams } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
-import { joinTimestamp, formatRequestDate } from './helper';
+import { formatRequestDate, joinTimestamp } from './helper';
 import { useUserStoreWithOut } from '/@/store/modules/user';
 
 const globSetting = useGlobSetting();
@@ -48,27 +48,30 @@ const transform: AxiosTransform = {
       throw new Error(t('sys.api.apiRequestFailed'));
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, result, message } = data;
+    const { errorCode, errorMessage, result, success } = data;
 
     // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    const hasSuccess = data && Reflect.has(data, 'errorCode') && errorCode === ResultEnum.SUCCESS;
     if (hasSuccess) {
+      if (success && errorMessage && options.successMessageMode === 'success') {
+        createMessage.success(errorMessage);
+      }
       return result;
     }
 
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作
     // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
     let timeoutMsg = '';
-    switch (code) {
-      case ResultEnum.TIMEOUT:
+    switch (errorCode) {
+      case ResultEnum.TIMEOUT || ResultEnum.TOKEN_ERROR || ResultEnum.LOGIN_EXPIRED:
         timeoutMsg = t('sys.api.timeoutMessage');
         const userStore = useUserStoreWithOut();
         userStore.setToken(undefined);
         userStore.logout(true);
         break;
       default:
-        if (message) {
-          timeoutMsg = message;
+        if (errorMessage) {
+          timeoutMsg = errorMessage;
         }
     }
 
@@ -198,8 +201,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // authentication schemes，e.g: Bearer
-        // authenticationScheme: 'Bearer',
-        authenticationScheme: '',
+        authenticationScheme: 'Bearer',
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
@@ -223,6 +225,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           formatDate: true,
           // 消息提示类型
           errorMessageMode: 'message',
+          // 成功消息提示类型
+          successMessageMode: 'none',
           // 接口地址
           apiUrl: globSetting.apiUrl,
           // 接口拼接地址

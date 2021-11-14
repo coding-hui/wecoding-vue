@@ -119,7 +119,7 @@
   const rememberMe = ref(false);
 
   const formData = reactive({
-    account: 'vben',
+    account: 'wecoding',
     password: '123456',
   });
 
@@ -136,7 +136,7 @@
       loading.value = true;
       const userInfo = await userStore.login({
         password: data.password,
-        username: data.account,
+        account: data.account,
         mode: 'none', //不要默认的错误提示
       });
       if (userInfo) {
