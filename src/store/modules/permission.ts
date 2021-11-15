@@ -18,7 +18,7 @@ import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 
 import { filter } from '/@/utils/helper/treeHelper';
 
-import { findMenuList } from '/@/api/sys/menu';
+import { findRouterList } from '/@/api/sys/menu';
 import { getPermCode } from '/@/api/sys/user';
 
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -185,7 +185,7 @@ export const usePermissionStore = defineStore({
           let routeList: AppRouteRecordRaw[] = [];
           try {
             this.changePermissionCode();
-            routeList = (await findMenuList()) as AppRouteRecordRaw[];
+            routeList = (await findRouterList()) as AppRouteRecordRaw[];
           } catch (error) {
             console.error(error);
           }

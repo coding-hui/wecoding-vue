@@ -1,41 +1,41 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="getTitle"
     width="50%"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
+  import { BasicModal, useModalInner } from '/@/components/Modal';
 
-  import { findMenuList, getMenuById, saveOrUpdateMenu } from '/@/api/sys/menu';
+  import { findMenuSelect, getMenuById, saveOrUpdateMenu } from '/@/api/sys/menu';
 
   export default defineComponent({
     name: 'MenuDrawer',
-    components: { BasicDrawer, BasicForm },
+    components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
       const parentId = ref(null);
 
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
-        labelWidth: 100,
+        labelWidth: 80,
         schemas: formSchema,
         showActionButtonGroup: false,
         baseColProps: { lg: 12, md: 24 },
       });
 
-      const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+      const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         await resetFields();
-        setDrawerProps({ confirmLoading: false });
+        setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         parentId.value = data?.parentId;
 
@@ -50,7 +50,7 @@
             setFieldsValue({ ...res });
           });
         }
-        const treeData = await findMenuList();
+        const treeData = await findMenuSelect();
         await updateSchema({
           field: 'parentId',
           componentProps: { treeData },
@@ -62,20 +62,20 @@
       async function handleSubmit() {
         try {
           const values = await validate();
-          setDrawerProps({ confirmLoading: true });
+          setModalProps({ confirmLoading: true });
           saveOrUpdateMenu(values, unref(isUpdate))
             .then(() => {
               emit('success');
             })
             .finally(() => {
-              closeDrawer();
+              closeModal();
             });
         } finally {
-          setDrawerProps({ confirmLoading: false });
+          setModalProps({ confirmLoading: false });
         }
       }
 
-      return { registerDrawer, registerForm, getTitle, handleSubmit };
+      return { registerModal, registerForm, getTitle, handleSubmit };
     },
   });
 </script>

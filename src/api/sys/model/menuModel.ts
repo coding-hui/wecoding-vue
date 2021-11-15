@@ -29,6 +29,11 @@ export interface SysMenu {
   cached?: boolean;
 }
 
+export interface SysMenuParams {
+  parentId?: number;
+  lazy?: boolean;
+}
+
 /**
  * @description: Get menu return value
  */

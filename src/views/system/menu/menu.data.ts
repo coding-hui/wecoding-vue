@@ -26,8 +26,34 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: '类型',
+    dataIndex: 'type',
+    width: 80,
+    customRender: ({ record }) => {
+      const type = record.type;
+      let color = '',
+        text = '';
+      switch (type) {
+        case '0':
+          color = 'success';
+          text = '目录';
+          break;
+        case '1':
+          color = 'processing';
+          text = '菜单';
+          break;
+        case '2':
+          color = 'warning';
+          text = '按钮';
+          break;
+      }
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  {
     title: '权限标识',
     dataIndex: 'permission',
+    align: 'left',
     width: 180,
   },
   {
@@ -60,7 +86,7 @@ const isButton = (type: string) => type === '2';
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'menuName',
+    field: 'name',
     label: '菜单名称',
     component: 'Input',
     colProps: { span: 8 },
@@ -184,7 +210,7 @@ export const formSchema: FormSchema[] = [
     field: 'visible',
     label: '是否显示',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: ({ values }) => !isButton(values.type),
     componentProps: {
       options: [
         { label: '是', value: true },

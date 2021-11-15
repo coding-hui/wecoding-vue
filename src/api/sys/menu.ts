@@ -1,13 +1,27 @@
 import { defHttp } from '/@/utils/http/axios';
-import { getMenuListResultModel, SysMenu } from './model/menuModel';
+import { getMenuListResultModel, SysMenu, SysMenuParams } from './model/menuModel';
 
 const RootPath = '/sys/menu';
 
 /**
+ * @description: Get user routers
+ */
+export const findRouterList = () => {
+  return defHttp.get<getMenuListResultModel>({ url: `${RootPath}/routers` });
+};
+
+/**
+ * @description: Get user menu treeselect
+ */
+export const findMenuSelect = (params?: SysMenuParams) => {
+  return defHttp.get<getMenuListResultModel>({ url: `${RootPath}/tree-select`, params: params });
+};
+
+/**
  * @description: Get user menu based on id
  */
-export const findMenuList = () => {
-  return defHttp.get<getMenuListResultModel>({ url: `${RootPath}/routers` });
+export const findMenuList = (params?: SysMenuParams) => {
+  return defHttp.get<getMenuListResultModel>({ url: `${RootPath}/tree`, params: params });
 };
 
 /**

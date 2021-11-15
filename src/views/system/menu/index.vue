@@ -27,7 +27,7 @@
         />
       </template>
     </BasicTable>
-    <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
+    <MenuModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -36,16 +36,16 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { findMenuList } from '/@/api/sys/menu';
 
-  import { useDrawer } from '/@/components/Drawer';
-  import MenuDrawer from './MenuDrawer.vue';
+  import { useModal } from '/@/components/Modal';
+  import MenuModal from './MenuModal.vue';
 
   import { columns, searchFormSchema } from './menu.data';
 
   export default defineComponent({
     name: 'MenuManagement',
-    components: { BasicTable, MenuDrawer, TableAction },
+    components: { BasicTable, MenuModal, TableAction },
     setup() {
-      const [registerDrawer, { openDrawer }] = useDrawer();
+      const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload, expandAll }] = useTable({
         title: '菜单列表',
         api: findMenuList,
@@ -73,20 +73,20 @@
       });
 
       function handleCreate() {
-        openDrawer(true, {
+        openModal(true, {
           isUpdate: false,
         });
       }
 
       function handleCreateChild(record: Recordable) {
-        openDrawer(true, {
+        openModal(true, {
           parentId: record?.id,
           isUpdate: false,
         });
       }
 
       function handleEdit(record: Recordable) {
-        openDrawer(true, {
+        openModal(true, {
           record,
           isUpdate: true,
         });
@@ -107,7 +107,7 @@
 
       return {
         registerTable,
-        registerDrawer,
+        registerModal,
         handleCreate,
         handleCreateChild,
         handleEdit,
