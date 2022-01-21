@@ -89,11 +89,13 @@ export const searchFormSchema: FormSchema[] = [
     field: 'name',
     label: '菜单名称',
     component: 'Input',
-    colProps: { span: 8 },
+    labelWidth: 70,
+    colProps: { span: 6 },
   },
   {
     field: 'status',
     label: '状态',
+    labelWidth: 40,
     component: 'Select',
     componentProps: {
       options: [
@@ -101,7 +103,7 @@ export const searchFormSchema: FormSchema[] = [
         { label: '停用', value: '1' },
       ],
     },
-    colProps: { span: 8 },
+    colProps: { span: 6 },
   },
 ];
 
@@ -173,7 +175,7 @@ export const formSchema: FormSchema[] = [
     field: 'component',
     label: '组件路径',
     component: 'Input',
-    ifShow: ({ values }) => isMenu(values.type),
+    ifShow: ({ values }) => !isButton(values.type),
   },
   {
     field: 'permission',

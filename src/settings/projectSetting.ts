@@ -30,7 +30,7 @@ const setting: ProjectConfig = {
   permissionCacheType: CacheTypeEnum.LOCAL,
 
   // Session timeout processing
-  sessionTimeoutProcessing: SessionTimeoutProcessingEnum.ROUTE_JUMP,
+  sessionTimeoutProcessing: SessionTimeoutProcessingEnum.PAGE_COVERAGE,
 
   // color
   themeColor: primaryColor,

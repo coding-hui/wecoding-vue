@@ -19,6 +19,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
+                placement: 'left',
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
               },
@@ -31,7 +32,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, nextTick } from 'vue';
+  import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { findMenuList } from '/@/api/sys/menu';
@@ -46,14 +47,18 @@
     components: { BasicTable, MenuModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
-      const [registerTable, { reload, expandAll }] = useTable({
+      const [registerTable, { reload }] = useTable({
         title: '菜单列表',
         api: findMenuList,
         columns,
         rowKey: 'id',
         formConfig: {
-          labelWidth: 120,
+          rowProps: {
+            gutter: 20,
+          },
+          labelAlign: 'left',
           schemas: searchFormSchema,
+          autoSubmitOnEnter: true,
         },
         isTreeTable: true,
         pagination: false,
@@ -102,7 +107,7 @@
 
       function onFetchSuccess() {
         // 演示默认展开所有表项
-        nextTick(expandAll);
+        // nextTick(expandAll);
       }
 
       return {

@@ -4,7 +4,7 @@
     @register="registerDrawer"
     showFooter
     :title="getTitle"
-    width="50%"
+    width="40%"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
@@ -27,10 +27,16 @@
       const parentId = ref(null);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-        labelWidth: 100,
         schemas: formSchema,
         showActionButtonGroup: false,
-        baseColProps: { lg: 12, md: 24 },
+        labelCol: {
+          xs: { span: 24, offset: 0 },
+          sm: { span: 5, offset: 0 },
+        },
+        wrapperCol: {
+          xs: { span: 24, offset: 0 },
+          sm: { span: 15, offset: 0 },
+        },
       });
 
       const [registerDrawer, { setModalProps, closeModal }] = useModalInner(async (data) => {

@@ -5,6 +5,18 @@ import type { SorterResult } from '../components/Table';
 export default {
   // basic-table setting
   table: {
+    formConfig: {
+      autoSubmitOnEnter: true,
+      labelWidth: 120,
+      labelAlign: 'left',
+      rowProps: {
+        gutter: 48,
+      },
+      wrapperCol: {
+        md: 8,
+        sm: 24,
+      },
+    },
     // Form interface request general configuration
     // support xxx.xxx.xxx
     fetchSetting: {

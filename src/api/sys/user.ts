@@ -1,13 +1,21 @@
 import { defHttp } from '/@/utils/http/axios';
-import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
-
+import {
+  LoginParams,
+  LoginResultModel,
+  GetUserInfoModel,
+  getUserListResultModel,
+  SysUserPageParam,
+  SysUser,
+} from './model/userModel';
 import { ErrorMessageMode } from '/#/axios';
+
+const RootPath = '/sys/user';
 
 enum Api {
   Login = '/login',
   Logout = '/logout',
   GetUserInfo = '/login-info',
-  GetPermCode = '//sys/menu/permissions',
+  GetPermCode = '/sys/menu/permissions',
 }
 
 /**
@@ -21,6 +29,7 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
     },
     {
       errorMessageMode: mode,
+      withToken: false,
     },
   );
 }
@@ -37,5 +46,29 @@ export function getPermCode() {
 }
 
 export function doLogout() {
-  return defHttp.get({ url: Api.Logout });
+  return defHttp.get({ url: Api.Logout }, { withToken: false });
 }
+
+export const findUserList = (params: SysUserPageParam) => {
+  return defHttp.get<getUserListResultModel>({ url: `${RootPath}/page`, params: params });
+};
+
+export const getUserById = (id: string) => {
+  return defHttp.get<SysUser>({ url: `${RootPath}/${id}` });
+};
+
+export const saveOrUpdateUser = (data: SysUser, isUpdate: boolean) => {
+  const config = {
+    url: `${RootPath}`,
+    data: data,
+  };
+  if (isUpdate) {
+    return defHttp.put<SysUser>(config, { successMessageMode: 'success' });
+  } else {
+    return defHttp.post<SysUser>(config, { successMessageMode: 'success' });
+  }
+};
+
+export const removeUser = (id: string) => {
+  return defHttp.delete({ url: `${RootPath}/${id}` }, { successMessageMode: 'success' });
+};

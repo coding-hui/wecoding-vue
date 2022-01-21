@@ -38,3 +38,27 @@ export const saveOrUpdateRole = (data: SysRole, isUpdate: boolean) => {
 export const removeRole = (roleId: number) => {
   return defHttp.delete({ url: `${RootPath}/${roleId}` }, { successMessageMode: 'success' });
 };
+
+export const getOwnMenuIds = (roleId: number) => {
+  return defHttp.get({ url: `${RootPath}/own-menu/${roleId}` });
+};
+
+export const grantMenu = (data: {}) => {
+  const config = {
+    url: `${RootPath}/grant-menu`,
+    data: data,
+  };
+  return defHttp.post(config, { successMessageMode: 'success' });
+};
+
+export const getOwnData = (roleId: number) => {
+  return defHttp.get({ url: `${RootPath}/own-data/${roleId}` });
+};
+
+export const grantData = (data: {}) => {
+  const config = {
+    url: `${RootPath}/grant-data`,
+    data: data,
+  };
+  return defHttp.post(config, { successMessageMode: 'success' });
+};

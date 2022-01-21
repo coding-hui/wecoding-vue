@@ -43,9 +43,10 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'name',
-    label: '菜单名称',
+    label: '角色名称',
     component: 'Input',
-    colProps: { span: 8 },
+    labelWidth: 70,
+    colProps: { span: 6 },
   },
   {
     field: 'status',
@@ -57,7 +58,8 @@ export const searchFormSchema: FormSchema[] = [
         { label: '停用', value: '1' },
       ],
     },
-    colProps: { span: 8 },
+    labelWidth: 40,
+    colProps: { span: 6 },
   },
 ];
 
@@ -78,21 +80,6 @@ export const formSchema: FormSchema[] = [
     field: 'code',
     label: '角色编码',
     component: 'Input',
-    required: true,
-  },
-  {
-    field: 'dataScopeType',
-    label: '数据范围类型',
-    component: 'Select',
-    componentProps: {
-      options: [
-        { label: '全部数据', value: '1' },
-        { label: '本部门及以下数据', value: '2' },
-        { label: '本部门数据', value: '3' },
-        { label: '仅本人数据', value: '4' },
-        { label: '自定义数据', value: '5' },
-      ],
-    },
     required: true,
   },
   {
@@ -120,6 +107,66 @@ export const formSchema: FormSchema[] = [
     colProps: {
       lg: 24,
       md: 24,
+    },
+  },
+];
+
+export const roleMenuFormSchema: FormSchema[] = [
+  {
+    label: '',
+    field: 'roleId',
+    component: 'Input',
+    show: false,
+  },
+  {
+    field: 'name',
+    label: '角色名称',
+    component: 'Input',
+    dynamicDisabled: true,
+  },
+  {
+    field: 'grantMenuIdList',
+    label: '',
+    component: 'Input',
+    slot: 'menu',
+  },
+];
+
+export const roleDeptFormSchema: FormSchema[] = [
+  {
+    label: '',
+    field: 'roleId',
+    component: 'Input',
+    show: false,
+  },
+  {
+    field: 'name',
+    label: '角色名称',
+    component: 'Input',
+    dynamicDisabled: true,
+  },
+  {
+    field: 'dataScopeType',
+    label: '数据范围类型',
+    component: 'Select',
+    componentProps: {
+      options: [
+        { label: '全部数据', value: '1' },
+        { label: '本部门及以下数据', value: '2' },
+        { label: '本部门数据', value: '3' },
+        { label: '仅本人数据', value: '4' },
+        { label: '自定义数据', value: '5' },
+      ],
+    },
+    required: true,
+  },
+  {
+    field: 'grantDeptIdList',
+    label: '',
+    component: 'Input',
+    slot: 'data',
+    ifShow: (record) => {
+      return record.values.dataScopeType === '5';
     },
   },
 ];

@@ -1,6 +1,7 @@
 import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '/@/router/routes/basic';
+import { DICT_DATA_ROUTE } from '/@/router/routes/common/dict';
 
 import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '/@/enums/pageEnum';
@@ -43,4 +44,5 @@ export const basicRoutes = [
   ...mainOutRoutes,
   REDIRECT_ROUTE,
   PAGE_NOT_FOUND_ROUTE,
+  DICT_DATA_ROUTE,
 ];

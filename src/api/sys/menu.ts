@@ -14,7 +14,7 @@ export const findRouterList = () => {
  * @description: Get user menu treeselect
  */
 export const findMenuSelect = (params?: SysMenuParams) => {
-  return defHttp.get<getMenuListResultModel>({ url: `${RootPath}/tree-select`, params: params });
+  return defHttp.get({ url: `${RootPath}/tree-select`, params: params });
 };
 
 /**

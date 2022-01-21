@@ -50,10 +50,20 @@
             setFieldsValue({ ...res });
           });
         }
+
         const treeData = await findMenuSelect();
+        const rootMenu = [
+          {
+            id: '0',
+            name: '顶级',
+            value: '0',
+            children: treeData,
+          },
+        ];
+        console.log(rootMenu);
         await updateSchema({
           field: 'parentId',
-          componentProps: { treeData },
+          componentProps: { treeData: rootMenu },
         });
       });
 

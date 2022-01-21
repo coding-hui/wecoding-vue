@@ -51,7 +51,7 @@ jobs:
   #         METHOD: sftp
   #         PORT: ${{ secrets.FTP_PORT }}
   #         LOCAL_DIR: dist
-  #         REMOTE_DIR: /srv/www/vben-admin
+  #         REMOTE_DIR: /srv/www/wecoding-admin
   #         ARGS: --delete --verbose --parallel=80
 
   push-to-gh-pages:
@@ -64,7 +64,7 @@ jobs:
       - name: Sed Config Base
         shell: bash
         run: |
-          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /vben-admin-thin-next/#g' ./.env.production
+          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /wecoding-admin-thin-next/#g' ./.env.production
           sed -i  "s#VITE_BUILD_COMPRESS\s*=.*#VITE_BUILD_COMPRESS = 'gzip'#g" ./.env.production
           cat ./.env.production
 
@@ -94,8 +94,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com > ~/.ssh/known_hosts
           chmod 700 ~/.ssh && chmod 600 ~/.ssh/*
-          git config --local user.email "vbenadmin@163.com"
-          git config --local user.name "vbenAdmin"
+          git config --local user.email "wecodingadmin@163.com"
+          git config --local user.name "wecodingAdmin"
 
       - name: Delete gh-pages branch
         run: |

@@ -63,7 +63,9 @@ const transform: AxiosTransform = {
     // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
     let timeoutMsg = '';
     switch (errorCode) {
-      case ResultEnum.TIMEOUT || ResultEnum.TOKEN_ERROR || ResultEnum.LOGIN_EXPIRED:
+      case ResultEnum.TIMEOUT:
+      case ResultEnum.TOKEN_ERROR:
+      case ResultEnum.LOGIN_EXPIRED:
         timeoutMsg = t('sys.api.timeoutMessage');
         const userStore = useUserStoreWithOut();
         userStore.setToken(undefined);
