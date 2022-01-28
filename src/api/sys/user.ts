@@ -6,6 +6,7 @@ import {
   getUserListResultModel,
   SysUserPageParam,
   SysUser,
+  SysUserParams,
 } from './model/userModel';
 import { ErrorMessageMode } from '/#/axios';
 
@@ -71,4 +72,16 @@ export const saveOrUpdateUser = (data: SysUser, isUpdate: boolean) => {
 
 export const removeUser = (id: string) => {
   return defHttp.delete({ url: `${RootPath}/${id}` }, { successMessageMode: 'success' });
+};
+
+export const grantRole = (data: SysUserParams) => {
+  const config = {
+    url: `${RootPath}/grant-role`,
+    data: data,
+  };
+  return defHttp.post(config, { successMessageMode: 'success' });
+};
+
+export const ownRole = (id: string) => {
+  return defHttp.get({ url: `${RootPath}/own-role/${id}` });
 };

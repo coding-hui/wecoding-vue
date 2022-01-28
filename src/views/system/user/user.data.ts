@@ -4,6 +4,8 @@ import { formatToDateTime } from '/@/utils/dateUtil';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 
+import { findDeptTreeSelect } from '/@/api/sys/dept';
+
 export const columns: BasicColumn[] = [
   {
     title: '用户名称',
@@ -98,7 +100,12 @@ export const formSchema: FormSchema[] = [
   {
     field: 'deptId',
     label: '归属部门',
-    component: 'Input',
+    component: 'ApiTreeSelect',
+    componentProps: {
+      api: findDeptTreeSelect,
+      replaceFields: {},
+      getPopupContainer: () => document.body,
+    },
     required: true,
   },
   {
@@ -157,11 +164,6 @@ export const formSchema: FormSchema[] = [
     field: 'phone',
     label: '电话',
     component: 'Input',
-  },
-  {
-    field: 'userType',
-    label: '用户类型',
-    component: 'Select',
   },
   {
     field: 'remark',

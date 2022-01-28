@@ -59,9 +59,11 @@ export interface SysUser {
 }
 
 export interface SysUserParams {
-  deptId: string;
-  realName: string;
-  nickName: string;
+  userId?: string;
+  deptId?: string;
+  realName?: string;
+  nickName?: string;
+  roleIds?: string[];
 }
 
 export type getUserListResultModel = SysUser[];

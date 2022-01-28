@@ -13,6 +13,11 @@
               onClick: handleEdit.bind(null, record),
             },
             {
+              icon: 'ant-design:security-scan-outlined',
+              tooltip: '授权角色',
+              onClick: handleGrantRole.bind(null, record),
+            },
+            {
               divider: true,
               icon: 'ant-design:delete-outlined',
               tooltip: '删除用户',
@@ -28,6 +33,7 @@
       </template>
     </BasicTable>
     <UserModal @register="registerModal" @success="handleSuccess" />
+    <GrantRoleModal @register="registerGrantRoleModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -38,14 +44,16 @@
 
   import { useModal } from '/@/components/Modal';
   import UserModal from './UserModal.vue';
+  import GrantRoleModal from './GrantRoleModal.vue';
 
   import { columns, searchFormSchema } from './user.data';
 
   export default defineComponent({
     name: 'ConfigManagement',
-    components: { BasicTable, UserModal, TableAction },
+    components: { BasicTable, UserModal, GrantRoleModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
+      const [registerGrantRoleModal, { openModal: openGrantRoleModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '用户列表',
         api: findUserList,
@@ -65,7 +73,7 @@
         showIndexColumn: true,
         canResize: false,
         actionColumn: {
-          width: 80,
+          width: 120,
           title: '操作',
           dataIndex: 'action',
           slots: { customRender: 'action' },
@@ -92,6 +100,12 @@
         });
       }
 
+      function handleGrantRole(record: Recordable) {
+        openGrantRoleModal(true, {
+          record,
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
@@ -103,11 +117,13 @@
       return {
         registerTable,
         registerModal,
+        registerGrantRoleModal,
         handleCreate,
         handleEdit,
         handleDelete,
         handleSuccess,
         onFetchSuccess,
+        handleGrantRole,
       };
     },
   });
