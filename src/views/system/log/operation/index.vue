@@ -41,7 +41,6 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { findLogList, removeLog, cleanLog } from '/@/api/sys/operlog';
 
-  import { useDict } from '/@/utils/dict';
   import { useModal } from '/@/components/Modal';
   import LogModal from './LogModal.vue';
 
@@ -51,10 +50,9 @@
     name: 'OperLogManagement',
     components: { BasicTable, LogModal, TableAction },
     setup() {
-      const dict = useDict('sys_yes_no');
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: '日志列表',
+        title: '操作日志',
         api: findLogList,
         columns,
         rowKey: 'id',
@@ -77,8 +75,6 @@
         },
       });
 
-      console.log(dict);
-
       function handleClean() {
         cleanLog().then(() => {
           reload();
@@ -88,7 +84,6 @@
       function handleDetail(record: Recordable) {
         openModal(true, {
           record,
-          isUpdate: true,
         });
       }
 

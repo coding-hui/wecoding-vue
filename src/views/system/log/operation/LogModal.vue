@@ -2,75 +2,47 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerDrawer"
+    cancelText="返回"
+    :showOkBtn="false"
     showFooter
-    :title="getTitle"
-    width="50%"
-    @ok="handleSubmit"
+    title="操作日志"
+    width="70%"
   >
     <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref } from 'vue';
+  import { defineComponent, reactive, toRefs } from 'vue';
+  import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form';
   import { formSchema } from './log.data';
-  import { BasicModal, useModalInner } from '/@/components/Modal';
-
-  import { getRoleById, saveOrUpdateRole } from '/@/api/sys/role';
 
   export default defineComponent({
-    name: 'RoleModal',
+    name: 'LogPreviewModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
-    setup(_, { emit }) {
-      const isUpdate = ref(true);
-      const parentId = ref(null);
-
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-        labelWidth: 100,
+    setup(_) {
+      const data = reactive({
+        log: {},
+      });
+      const [registerForm, { setFieldsValue }] = useForm({
+        baseColProps: {
+          span: 8,
+        },
+        rowProps: {
+          gutter: 24,
+        },
         schemas: formSchema,
+        showResetButton: false,
+        showSubmitButton: false,
         showActionButtonGroup: false,
-        baseColProps: { lg: 12, md: 24 },
       });
-
-      const [registerDrawer, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        await resetFields();
+      const [registerDrawer, { setModalProps }] = useModalInner(async (data) => {
+        await setFieldsValue({ ...data.record });
         setModalProps({ confirmLoading: false });
-        isUpdate.value = !!data?.isUpdate;
-        parentId.value = data?.parentId;
-
-        // 添加子菜单
-        if (unref(parentId)) {
-          await setFieldsValue({ parentId: unref(parentId) });
-        }
-
-        if (unref(isUpdate)) {
-          const { roleId } = data.record;
-          getRoleById(roleId).then((res) => {
-            setFieldsValue({ ...res });
-          });
-        }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增角色' : '编辑角色'));
-
-      async function handleSubmit() {
-        try {
-          const values = await validate();
-          setModalProps({ confirmLoading: true });
-          saveOrUpdateRole(values, unref(isUpdate))
-            .then(() => {
-              emit('success');
-            })
-            .finally(() => {
-              closeModal();
-            });
-        } finally {
-          setModalProps({ confirmLoading: false });
-        }
-      }
-
-      return { registerDrawer, registerForm, getTitle, handleSubmit };
+      return { registerForm, registerDrawer, ...toRefs(data) };
     },
   });
 </script>

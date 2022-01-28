@@ -75,62 +75,73 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    label: '操作编号',
-    field: 'id',
+    label: '模块标题',
+    field: 'title',
     component: 'Input',
   },
   {
-    field: 'name',
-    label: '角色名称',
-    component: 'Input',
-    required: true,
-  },
-  {
-    field: 'code',
-    label: '角色编码',
-    component: 'Input',
-    required: true,
-  },
-  {
-    field: 'dataScopeType',
-    label: '数据范围类型',
+    label: '结果类型（1:成功，0失败）',
+    field: 'type',
     component: 'Select',
-    componentProps: {
-      options: [
-        { label: '全部数据', value: '1' },
-        { label: '本部门及以下数据', value: '2' },
-        { label: '本部门数据', value: '3' },
-        { label: '仅本人数据', value: '4' },
-        { label: '自定义数据', value: '5' },
-      ],
-    },
-    required: true,
   },
   {
-    field: 'sort',
-    label: '排序',
-    component: 'InputNumber',
+    label: '方法名称',
+    field: 'method',
+    component: 'Input',
   },
   {
-    field: 'status',
-    label: '状态',
-    component: 'RadioGroup',
-    defaultValue: '0',
-    componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
-      ],
-    },
-    required: true,
+    label: '请求方式',
+    field: 'requestMethod',
+    component: 'Input',
   },
   {
-    field: 'remark',
-    label: '备注',
+    label: '用户浏览器',
+    field: 'userAgent',
+    component: 'Input',
+  },
+  {
+    label: '操作类别',
+    field: 'operatorType',
+    component: 'Select',
+  },
+  {
+    label: '部门名称',
+    field: 'deptName',
+    component: 'Input',
+  },
+  {
+    label: '请求 URI',
+    field: 'requestUri',
+    component: 'Input',
+  },
+  {
+    label: '主机地址',
+    field: 'ip',
+    component: 'Input',
+  },
+  {
+    label: '操作地点',
+    field: 'location',
+    component: 'Input',
+  },
+  {
+    label: '执行时间',
+    field: 'time',
+    component: 'Input',
+  },
+  {
+    label: '业务操作类型',
+    field: 'businessType',
+    component: 'Select',
+  },
+  {
+    label: '请求参数',
+    field: 'params',
     component: 'InputTextArea',
-    colProps: {
-      lg: 24,
-      md: 24,
-    },
+  },
+  {
+    label: '错误消息',
+    field: 'exception',
+    component: 'InputTextArea',
   },
 ];
