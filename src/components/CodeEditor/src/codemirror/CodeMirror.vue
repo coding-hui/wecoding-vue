@@ -17,13 +17,21 @@
   import 'codemirror/mode/javascript/javascript';
   import 'codemirror/mode/css/css';
   import 'codemirror/mode/htmlmixed/htmlmixed';
+  import 'codemirror/mode/xml/xml';
+  import 'codemirror/mode/clike/clike';
+  import 'codemirror/mode/vue/vue';
+  import 'codemirror/mode/htmlmixed/htmlmixed';
+  import 'codemirror/mode/sql/sql';
+  import 'codemirror/mode/velocity/velocity';
 
   const props = defineProps({
     mode: {
       type: String as PropType<MODE>,
+      // eslint-disable-next-line vue/valid-define-props
       default: MODE.JSON,
       validator(value: any) {
         // 这个值必须匹配下列字符串中的一个
+        // eslint-disable-next-line vue/valid-define-props
         return Object.values(MODE).includes(value);
       },
     },

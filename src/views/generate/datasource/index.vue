@@ -1,26 +1,25 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
+    <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增菜单 </a-button>
+        <a-button type="primary" @click="handleCreate"> 新增 </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
               icon: 'clarity:note-edit-line',
+              tooltip: '编辑',
               onClick: handleEdit.bind(null, record),
             },
             {
-              icon: 'ant-design:plus-outlined',
-              onClick: handleCreateChild.bind(null, record),
-            },
-            {
+              divider: true,
               icon: 'ant-design:delete-outlined',
+              tooltip: '删除',
               color: 'error',
               popConfirm: {
                 placement: 'left',
-                title: '是否确认删除',
+                title: '是否删除',
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -28,48 +27,48 @@
         />
       </template>
     </BasicTable>
-    <MenuModal @register="registerModal" @success="handleSuccess" />
+    <GenDatasourceModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { findMenuList, removeMenu } from '/@/api/sys/menu';
+  import { findGenDatasourceList, removeGenDatasource } from '/@/api/gen/datasource';
 
   import { useModal } from '/@/components/Modal';
-  import MenuModal from './MenuModal.vue';
+  import GenDatasourceModal from './GenDatasourceModal.vue';
 
-  import { columns, searchFormSchema } from './menu.data';
+  import { columns, searchFormSchema } from './genDatasource.data';
 
   export default defineComponent({
-    name: 'MenuManagement',
-    components: { BasicTable, MenuModal, TableAction },
+    name: 'GenDatasourceManagement',
+    components: { BasicTable, GenDatasourceModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: '菜单列表',
-        api: findMenuList,
+        title: '数据源配置',
+        api: findGenDatasourceList,
         columns,
         rowKey: 'id',
         formConfig: {
-          rowProps: {
-            gutter: 20,
-          },
-          labelAlign: 'left',
+          labelWidth: 90,
           schemas: searchFormSchema,
+          compact: true,
           autoSubmitOnEnter: true,
+          showAdvancedButton: true,
+          autoAdvancedLine: 1,
+          showActionButtonGroup: true,
+          actionColOptions: {
+            span: 6,
+          },
         },
-        isTreeTable: true,
-        pagination: false,
-        striped: false,
         useSearchForm: true,
         showTableSetting: true,
-        bordered: false,
-        showIndexColumn: false,
+        showIndexColumn: true,
         canResize: false,
         actionColumn: {
-          width: 120,
+          width: 80,
           title: '操作',
           dataIndex: 'action',
           slots: { customRender: 'action' },
@@ -83,13 +82,6 @@
         });
       }
 
-      function handleCreateChild(record: Recordable) {
-        openModal(true, {
-          parentId: record?.id,
-          isUpdate: false,
-        });
-      }
-
       function handleEdit(record: Recordable) {
         openModal(true, {
           record,
@@ -98,7 +90,7 @@
       }
 
       function handleDelete(record: Recordable) {
-        removeMenu(record?.id).then(() => {
+        removeGenDatasource(record?.id).then(() => {
           reload();
         });
       }
@@ -107,20 +99,13 @@
         reload();
       }
 
-      function onFetchSuccess() {
-        // 演示默认展开所有表项
-        // nextTick(expandAll);
-      }
-
       return {
         registerTable,
         registerModal,
         handleCreate,
-        handleCreateChild,
         handleEdit,
         handleDelete,
         handleSuccess,
-        onFetchSuccess,
       };
     },
   });
