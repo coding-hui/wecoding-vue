@@ -74,6 +74,12 @@
       async function handleSubmit() {
         try {
           const values = await validate();
+          let keys = getTree().getCheckedKeys();
+          if (Reflect.has(keys, 'checked')) {
+            values.grantMenuIdList = keys.checked;
+          } else {
+            values.grantMenuIdList = getTree().getCheckedKeys();
+          }
           setDrawerProps({ confirmLoading: true });
           grantMenu(values)
             .then(() => {
