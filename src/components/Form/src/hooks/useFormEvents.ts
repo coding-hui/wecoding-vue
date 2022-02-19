@@ -4,9 +4,8 @@ import type { NamePath } from 'ant-design-vue/lib/form/interface';
 import { unref, toRaw } from 'vue';
 import { isArray, isFunction, isObject, isString } from '/@/utils/is';
 import { deepMerge } from '/@/utils';
-import { dateItemType, handleInputNumberValue } from '../helper';
-import { dateUtil } from '/@/utils/dateUtil';
-import { cloneDeep, uniqBy } from 'lodash-es';
+import { processNumberValue, processDateValue } from '../helper';
+import { cloneDeep, get, uniqBy } from 'lodash-es';
 import { error } from '/@/utils/log';
 
 interface UseFormActionContext {
@@ -48,44 +47,41 @@ export function useFormEvents({
    * @description: Set form value
    */
   async function setFieldsValue(values: Recordable): Promise<void> {
-    const fields = unref(getSchema)
-      .map((item) => item.field)
-      .filter(Boolean);
-
-    const validKeys: string[] = [];
-    Object.keys(values).forEach((key) => {
-      const schema = unref(getSchema).find((item) => item.field === key);
-      let value = values[key];
-
-      const hasKey = Reflect.has(values, key);
-
-      value = handleInputNumberValue(schema?.component, value);
-      // 0| '' is allow
-      if (hasKey && fields.includes(key)) {
-        // time type
-        if (itemIsDateType(key)) {
-          if (Array.isArray(value)) {
-            const arr: any[] = [];
-            for (const ele of value) {
-              arr.push(ele ? dateUtil(ele) : null);
-            }
-            formModel[key] = arr;
-          } else {
-            const { componentProps } = schema || {};
-            let _props = componentProps as any;
-            if (typeof componentProps === 'function') {
-              _props = _props({ formModel });
-            }
-            formModel[key] = value ? (_props?.valueFormat ? value : dateUtil(value)) : null;
-          }
-        } else {
-          formModel[key] = value;
-        }
-        validKeys.push(key);
+    if (!values || Object.keys(values).length === 0) return;
+    // const validKeys: string[] = [];
+    for (const schema of unref(getSchema)) {
+      const component = schema?.component;
+      const props = getComponentProps(schema);
+      const key = schema.field;
+      let value = get(values, key);
+      if (value) {
+        value = processNumberValue(value, component);
+        value = processDateValue(value, component, props);
+        // console.log('1', key, value);
       }
-    });
-    validateFields(validKeys).catch((_) => {});
+      formModel[key] = value;
+      const labelKey = schema?.fieldLabel;
+      if (labelKey) {
+        const labelValue = get(values, labelKey);
+        // console.log('2', labelKey, labelValue);
+        formModel[labelKey] = labelValue;
+      }
+      // validKeys.push(key);
+    }
+    // validateFields(validKeys).catch((_) => {});
   }
+
+  /**
+   * @description: get component props
+   */
+  function getComponentProps(schema: any) {
+    let { componentProps = {} } = schema;
+    if (isFunction(componentProps)) {
+      componentProps = componentProps({ schema, formModel }) ?? {};
+    }
+    return componentProps as Recordable;
+  }
+
   /**
    * @description: Delete based on field name
    */
@@ -150,13 +146,14 @@ export function useFormEvents({
     }
 
     const hasField = updateData.every(
-      (item) => item.component === 'Divider' || (Reflect.has(item, 'field') && item.field),
+      (item) =>
+        item.component === 'Divider' ||
+        item.component === 'FormGroup' ||
+        (Reflect.has(item, 'field') && item.field),
     );
 
     if (!hasField) {
-      error(
-        'All children of the form Schema array that need to be updated must contain the `field` field',
-      );
+      error('重载的元素不能是 Divider 或 FormGroup 组件，必须包含 field 字段。');
       return;
     }
     schemaRef.value = updateData as FormSchema[];
@@ -172,13 +169,14 @@ export function useFormEvents({
     }
 
     const hasField = updateData.every(
-      (item) => item.component === 'Divider' || (Reflect.has(item, 'field') && item.field),
+      (item) =>
+        item.component === 'Divider' ||
+        item.component === 'FormGroup' ||
+        (Reflect.has(item, 'field') && item.field),
     );
 
     if (!hasField) {
-      error(
-        'All children of the form Schema array that need to be updated must contain the `field` field',
-      );
+      error('更新的元素不能是 Divider 或 FormGroup 组件，必须包含 field 字段。');
       return;
     }
     const schema: FormSchema[] = [];
@@ -201,21 +199,16 @@ export function useFormEvents({
     return handleFormValues(toRaw(unref(formModel)));
   }
 
-  /**
-   * @description: Is it time
-   */
-  function itemIsDateType(key: string) {
-    return unref(getSchema).some((item) => {
-      return item.field === key ? dateItemType.includes(item.component) : false;
-    });
-  }
-
   async function validateFields(nameList?: NamePath[] | undefined) {
-    return unref(formElRef)?.validateFields(nameList);
+    const values = await unref(formElRef)?.validateFields(nameList);
+    const res = handleFormValues(toRaw(values));
+    return res;
   }
 
   async function validate(nameList?: NamePath[] | undefined) {
-    return await unref(formElRef)?.validate(nameList);
+    const values = await unref(formElRef)?.validate(nameList);
+    const res = handleFormValues(toRaw(values));
+    return res;
   }
 
   async function clearValidate(name?: string | string[]) {
@@ -239,9 +232,8 @@ export function useFormEvents({
     const formEl = unref(formElRef);
     if (!formEl) return;
     try {
-      const values = await validate();
-      const res = handleFormValues(values);
-      emit('submit', res);
+      const data = await validate();
+      emit('submit', data);
     } catch (error: any) {
       throw new Error(error);
     }

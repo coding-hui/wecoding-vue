@@ -64,67 +64,11 @@ export const searchFormSchema: FormSchema[] = [
     label: '登录账号',
     field: 'account',
     component: 'Input',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '用户id',
-    field: 'userId',
-    component: 'Input',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '登录IP地址',
-    field: 'ipaddr',
-    component: 'Input',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '登录地点',
-    field: 'loginLocation',
-    component: 'Input',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '浏览器类型',
-    field: 'browser',
-    component: 'Input',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '操作系统',
-    field: 'os',
-    component: 'Input',
-    colProps: { md: 6, sm: 24 },
   },
   {
     label: '登录状态（0登录失败 1登录成功 2登出）',
     field: 'status',
     component: 'RadioGroup',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '提示消息',
-    field: 'msg',
-    component: 'Input',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '登录时间',
-    field: 'loginTime',
-    component: 'DatePicker',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '登出时间',
-    field: 'logoutTime',
-    component: 'DatePicker',
-    colProps: { md: 6, sm: 24 },
-  },
-  {
-    label: '用户登录时保存token的uuid',
-    field: 'loginUuid',
-    component: 'Input',
-    colProps: { md: 6, sm: 24 },
   },
 ];
 

@@ -14,9 +14,10 @@
   import { upperFirst, cloneDeep } from 'lodash-es';
   import { useItemLabelWidth } from '../hooks/useLabelWidth';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import FormGroup from './FormGroup.vue';
 
   export default defineComponent({
-    name: 'BasicFormItem',
+    name: 'WeCodingFormItem',
     inheritAttrs: false,
     props: {
       schema: {
@@ -36,7 +37,9 @@
         default: () => ({}),
       },
       setFormModel: {
-        type: Function as PropType<(key: string, value: any) => void>,
+        type: Function as PropType<
+          (key: string, value: any, labelKey?: string, labelValue?: any) => void
+        >,
         default: null,
       },
       tableAction: {
@@ -72,10 +75,10 @@
       });
 
       const getComponentsProps = computed(() => {
-        const { schema, tableAction, formModel, formActionType } = props;
+        const { schema, formModel, tableAction, formActionType } = props;
         let { componentProps = {} } = schema;
         if (isFunction(componentProps)) {
-          componentProps = componentProps({ schema, tableAction, formModel, formActionType }) ?? {};
+          componentProps = componentProps({ schema, formModel, tableAction, formActionType }) ?? {};
         }
         if (schema.component === 'Divider') {
           componentProps = Object.assign({ type: 'horizontal' }, componentProps, {
@@ -222,8 +225,12 @@
           renderComponentContent,
           component,
           field,
+          fieldLabel,
           changeEvent = 'change',
           valueField,
+          labelField,
+          defaultValue,
+          defaultLabel,
         } = props.schema;
 
         const isCheck = component && ['Switch', 'Checkbox'].includes(component);
@@ -232,20 +239,26 @@
 
         const on = {
           [eventKey]: (...args: Nullable<Recordable>[]) => {
-            const [e] = args;
+            // console.log('event', eventKey, ...args);
+            const [e, labelValue] = args;
             if (propsData[eventKey]) {
               propsData[eventKey](...args);
             }
             const target = e ? e.target : null;
             const value = target ? (isCheck ? target.checked : target.value) : e;
-            props.setFormModel(field, value);
+            props.setFormModel(
+              field,
+              value || (typeof value == 'number' ? value : defaultValue || ''),
+              fieldLabel,
+              labelValue || defaultLabel || '',
+            );
           },
         };
         const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
 
         const { autoSetPlaceHolder, size } = props.formProps;
         const propsData: Recordable = {
-          allowClear: true,
+          // allowClear: true, // 默认不显示清除按钮
           getPopupContainer: (trigger: Element) => trigger.parentNode,
           size,
           ...unref(getComponentsProps),
@@ -264,6 +277,13 @@
         const bindValue: Recordable = {
           [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field],
         };
+
+        if (fieldLabel) {
+          bindValue[labelField || 'labelValue'] = props.formModel[fieldLabel];
+          // console.log('bindValue', bindValue, props.formModel);
+          bindValue.labelInValue = true;
+          // bindValue.treeCheckable = true;
+        }
 
         const compAttr: Recordable = {
           ...propsData,
@@ -306,7 +326,7 @@
       }
 
       function renderItem() {
-        const { itemProps, slot, render, field, suffix, component } = props.schema;
+        const { itemProps, slot, render, field, fieldLabel, suffix, component } = props.schema;
         const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
         const { colon } = props.formProps;
 
@@ -314,6 +334,12 @@
           return (
             <Col span={24}>
               <Divider {...unref(getComponentsProps)}>{renderLabelHelpMessage()}</Divider>
+            </Col>
+          );
+        } else if (component === 'FormGroup') {
+          return (
+            <Col span={24}>
+              <FormGroup {...unref(getComponentsProps)}>{renderLabelHelpMessage()}</FormGroup>
             </Col>
           );
         } else {
@@ -339,10 +365,15 @@
               labelCol={labelCol}
               wrapperCol={wrapperCol}
             >
-              <div style="display:flex">
-                <div style="flex:1;">{getContent()}</div>
-                {showSuffix && <span class="suffix">{getSuffix}</span>}
-              </div>
+              {showSuffix ? (
+                <div style="display: flex">
+                  <div style="flex: 1">{getContent()}</div>
+                  <span class="suffix">{getSuffix}</span>
+                </div>
+              ) : (
+                getContent()
+              )}
+              {fieldLabel ? <Form.Item name={fieldLabel} v-show={false} /> : null}
             </Form.Item>
           );
         }

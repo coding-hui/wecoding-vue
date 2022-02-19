@@ -26,10 +26,10 @@
       const isUpdate = ref(true);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-        labelWidth: 80,
+        labelWidth: 120,
+        baseColProps: { lg: 12, md: 24 },
         schemas: formSchema,
         showActionButtonGroup: false,
-        baseColProps: { lg: 12, md: 24 },
       });
 
       const [registerDrawer, { setModalProps, closeModal }] = useModalInner(async (data) => {

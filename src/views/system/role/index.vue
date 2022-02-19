@@ -72,10 +72,8 @@
         columns,
         rowKey: 'roleId',
         formConfig: {
-          rowProps: {
-            gutter: 20,
-          },
-          labelAlign: 'left',
+          baseColProps: { lg: 6, md: 8 },
+          labelWidth: 90,
           schemas: searchFormSchema,
           autoSubmitOnEnter: true,
         },

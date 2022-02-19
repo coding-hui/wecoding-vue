@@ -52,6 +52,8 @@ export interface FormProps {
   layout?: 'vertical' | 'inline' | 'horizontal';
   // Form value
   model?: Recordable;
+  // Request Body
+  enctype?: 'json' | 'form-data';
   // The width of all items in the entire form
   labelWidth?: number | string;
   //alignment
@@ -122,17 +124,21 @@ export interface FormProps {
   colon?: boolean;
 }
 export interface FormSchema {
-  // Field name
+  // 字段名
   field: string;
+  // 字段标签名，如返回 Select、TreeSelect 的标签名
+  fieldLabel?: string;
   // Event name triggered by internal value change, default change
   changeEvent?: string;
-  // Variable name bound to v-model Default value
+  // 绑定组件的属性名（一般无需设置）默认：value，如：v-model:value
   valueField?: string;
-  // Label name
-  label: string | VNode;
-  // Auxiliary text
+  // 绑定组件的标签属性名（一般无需设置）默认：labelValue，如：v-model:labelValue
+  labelField?: string;
+  // 标签名
+  label: string;
+  // 辅助标签名，使用浅色显示在标签右侧
   subLabel?: string;
-  // Help text on the right side of the text
+  // 帮助信息，显示在标签右侧的问号里
   helpMessage?:
     | string
     | string[]
@@ -172,13 +178,15 @@ export interface FormSchema {
 
   // 默认值
   defaultValue?: any;
+  defaultLabel?: any;
   isAdvanced?: boolean;
 
   // Matching details components
   span?: number;
 
+  // 表单控件是否显示（为 false 时不渲染控件）
   ifShow?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
-
+  // 表单控件是否显示（正常渲染控件，只是控制显示隐藏）
   show?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
 
   // Render the content in the form-item tag

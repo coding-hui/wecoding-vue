@@ -1,8 +1,13 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
+    <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 新增字典 </a-button>
+      </template>
+      <template #Type="{ record }">
+        <a @click="go(`${PageEnum.DICT_DATA}/${record.type}`)" :title="record.type">
+          {{ record.type }}
+        </a>
       </template>
       <template #action="{ record }">
         <TableAction
@@ -36,30 +41,25 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { findDictTypeList, removeDictType } from '/@/api/sys/dict';
 
+  import { useGo } from '/@/hooks/web/usePage';
   import { useModal } from '/@/components/Modal';
   import DictTypeModal from './DictTypeModal.vue';
+  import { PageEnum } from '/@/enums/pageEnum';
 
-  import { columns, searchFormSchema } from './dictType.data';
+  import { tableColumns, searchForm } from './dictType.data';
 
   export default defineComponent({
     name: 'DictManagement',
     components: { BasicTable, DictTypeModal, TableAction },
     setup() {
+      const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '字典列表',
-        api: findDictTypeList,
-        columns,
         rowKey: 'dictId',
-        formConfig: {
-          labelWidth: 40,
-          labelAlign: 'left',
-          rowProps: {
-            gutter: 20,
-          },
-          schemas: searchFormSchema,
-          autoSubmitOnEnter: true,
-        },
+        api: findDictTypeList,
+        columns: tableColumns,
+        formConfig: searchForm,
         useSearchForm: true,
         showTableSetting: true,
         showIndexColumn: true,
@@ -96,18 +96,15 @@
         reload();
       }
 
-      function onFetchSuccess() {
-        // 演示默认展开所有表项
-      }
-
       return {
+        go,
+        PageEnum,
         registerTable,
         registerModal,
         handleCreate,
         handleEdit,
         handleDelete,
         handleSuccess,
-        onFetchSuccess,
       };
     },
   });

@@ -1,33 +1,38 @@
 <template>
   <a-col v-bind="actionColOpt" v-if="showActionButtonGroup">
-    <div style="width: 100%" :style="{ textAlign: actionColOpt.style.textAlign }">
+    <div
+      style="width: 100%; white-space: nowrap"
+      :style="{ textAlign: actionColOpt.style.textAlign }"
+    >
       <FormItem>
-        <slot name="resetBefore"></slot>
-        <Button
-          type="default"
-          class="mr-2"
-          v-bind="getResetBtnOptions"
-          @click="resetAction"
-          v-if="showResetButton"
-        >
-          {{ getResetBtnOptions.text }}
-        </Button>
         <slot name="submitBefore"></slot>
-
         <Button
           type="primary"
-          class="mr-2"
+          class="ml-2"
           v-bind="getSubmitBtnOptions"
           @click="submitAction"
           v-if="showSubmitButton"
         >
+          <Icon icon="ant-design:search-outlined" />
           {{ getSubmitBtnOptions.text }}
         </Button>
-
+        <slot name="resetBefore"></slot>
+        <Button
+          type="default"
+          class="ml-2"
+          v-bind="getResetBtnOptions"
+          @click="resetAction"
+          v-if="showResetButton"
+        >
+          <Icon icon="ant-design:reload-outlined" />
+          {{ getResetBtnOptions.text }}
+        </Button>
         <slot name="advanceBefore"></slot>
         <Button
           type="link"
           size="small"
+          class="ml-2"
+          style="padding: 0"
           @click="toggleAdvanced"
           v-if="showAdvancedButton && !hideAdvanceBtn"
         >
@@ -44,6 +49,7 @@
   //import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
   import { defineComponent, computed, PropType } from 'vue';
   import { Form, Col } from 'ant-design-vue';
+  import { Icon } from '/@/components/Icon';
   import { Button, ButtonProps } from '/@/components/Button';
   import { BasicArrow } from '/@/components/Basic';
   import { useFormContext } from '../hooks/useFormContext';
@@ -56,6 +62,7 @@
     name: 'BasicFormAction',
     components: {
       FormItem: Form.Item,
+      Icon,
       Button,
       BasicArrow,
       [Col.name]: Col,
@@ -80,21 +87,31 @@
       actionSpan: propTypes.number.def(6),
       isAdvanced: propTypes.bool,
       hideAdvanceBtn: propTypes.bool,
+      baseColProps: {
+        type: Object as PropType<Partial<ColEx>>,
+      },
     },
     emits: ['toggle-advanced'],
     setup(props, { emit }) {
       const { t } = useI18n();
 
       const actionColOpt = computed(() => {
-        const { showAdvancedButton, actionSpan: span, actionColOptions } = props;
-        const actionSpan = 24 - span;
-        const advancedSpanObj = showAdvancedButton
-          ? { span: actionSpan < 6 ? 24 : actionSpan }
-          : {};
+        const { showAdvancedButton, hideAdvanceBtn, baseColProps, actionColOptions } = props;
+        // const { showAdvancedButton, baseColProps, actionSpan: span, actionColOptions } = props;
+        // const actionSpan = 24 - span;
+        // const advancedSpanObj = showAdvancedButton
+        //   ? { span: actionSpan < 6 ? 24 : actionSpan }
+        //   : {};
         const actionColOpt: Partial<ColEx> = {
-          style: { textAlign: 'right' },
-          span: showAdvancedButton ? 6 : 4,
-          ...advancedSpanObj,
+          style: {
+            paddingLeft: '20px',
+            paddingRight: '22px',
+            textAlign: showAdvancedButton && !hideAdvanceBtn ? 'right' : 'left',
+            marginLeft: showAdvancedButton && !hideAdvanceBtn ? 'auto' : 'inherit',
+          },
+          ...baseColProps,
+          // span: showAdvancedButton ? 6 : 4,
+          // ...advancedSpanObj,
           ...actionColOptions,
         };
         return actionColOpt;

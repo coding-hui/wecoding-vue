@@ -9,7 +9,7 @@
   >
     <BasicTable @register="registerTable">
       <template #form-dsSelect="{ model, field }">
-        <ApiSelect
+        <Select
           v-model:value="model[field]"
           :api="findGenDatasourceOptions"
           @change="handleDsChange"
@@ -25,7 +25,7 @@
 
   import { BasicTable, useTable } from '/@/components/Table';
   import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { ApiSelect } from '/@/components/Form';
+  import { Select } from '/@/components/Form';
 
   import { tableColumns, tableSearchFormSchema } from './genTable.data';
 
@@ -51,15 +51,8 @@
     },
     formConfig: {
       labelWidth: 90,
+      baseColProps: { lg: 6, md: 8 },
       schemas: tableSearchFormSchema,
-      compact: true,
-      autoSubmitOnEnter: true,
-      showAdvancedButton: true,
-      autoAdvancedLine: 1,
-      showActionButtonGroup: true,
-      actionColOptions: {
-        span: 6,
-      },
     },
     size: 'small',
     inset: true,

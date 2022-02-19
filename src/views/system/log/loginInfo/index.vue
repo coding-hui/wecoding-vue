@@ -56,16 +56,9 @@
         showIndexColumn: true,
         canResize: false,
         formConfig: {
+          baseColProps: { lg: 6, md: 8 },
           labelWidth: 90,
           schemas: searchFormSchema,
-          compact: true,
-          autoSubmitOnEnter: true,
-          showAdvancedButton: true,
-          autoAdvancedLine: 1,
-          showActionButtonGroup: true,
-          actionColOptions: {
-            span: 6,
-          },
         },
         actionColumn: {
           width: 120,

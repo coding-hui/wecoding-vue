@@ -59,13 +59,11 @@ export const searchFormSchema: FormSchema[] = [
     label: '表名称',
     field: 'tableName',
     component: 'Input',
-    colProps: { md: 6, sm: 24 },
   },
   {
     label: '表描述',
     field: 'tableComment',
     component: 'Input',
-    colProps: { md: 6, sm: 24 },
   },
 ];
 

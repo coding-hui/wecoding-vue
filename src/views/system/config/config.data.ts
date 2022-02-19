@@ -1,7 +1,5 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
 import { formatToDateTime } from '/@/utils/dateUtil';
 
 export const columns: BasicColumn[] = [
@@ -34,12 +32,7 @@ export const columns: BasicColumn[] = [
     title: '系统内置',
     dataIndex: 'configType',
     width: 80,
-    customRender: ({ record }) => {
-      const configType = record.configType;
-      const color = configType == 'Y' ? 'processing' : '';
-      const text = configType == 'Y' ? '是' : '否';
-      return h(Tag, { color: color }, () => text);
-    },
+    dictType: 'yes_or_no',
   },
 ];
 
@@ -48,19 +41,16 @@ export const searchFormSchema: FormSchema[] = [
     field: 'configName',
     label: '配置名称',
     component: 'Input',
-    colProps: { md: 6, sm: 24 },
   },
   {
     field: 'configKey',
     label: '配置键名',
     component: 'Input',
-    colProps: { md: 6, sm: 24 },
   },
   {
     field: 'configValue',
     label: '配置键值',
     component: 'Input',
-    colProps: { md: 6, sm: 24 },
   },
 ];
 
@@ -95,10 +85,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: 'N',
     componentProps: {
-      options: [
-        { label: '系统内置', value: 'Y' },
-        { label: '普通配置', value: 'N' },
-      ],
+      dictType: 'yes_or_no',
     },
   },
   {

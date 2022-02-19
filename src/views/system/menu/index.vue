@@ -53,10 +53,9 @@
         columns,
         rowKey: 'id',
         formConfig: {
-          rowProps: {
-            gutter: 20,
-          },
-          labelAlign: 'left',
+          baseColProps: { lg: 6, md: 8 },
+          labelWidth: 90,
+          compact: true,
           schemas: searchFormSchema,
           autoSubmitOnEnter: true,
         },

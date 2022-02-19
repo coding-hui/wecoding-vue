@@ -402,6 +402,8 @@ export interface BasicTableProps<T = any> {
   onExpandedRowsChange?: (expandedRows: string[] | number[]) => void;
 
   onColumnsChange?: (data: ColumnChangeParam[]) => void;
+
+  dictTypes?: Set<string>;
 }
 
 export type CellFormat =
@@ -447,6 +449,12 @@ export interface BasicColumn extends ColumnProps {
   auth?: RoleEnum | RoleEnum[] | string | string[];
   // 业务控制是否显示
   ifShow?: boolean | ((column: BasicColumn) => boolean);
+
+  // 数据的标签显示
+  dataLabel?: string;
+
+  // 字典类型
+  dictType?: string;
 }
 
 export type ColumnChangeParam = {

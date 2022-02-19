@@ -1,4 +1,4 @@
-import { BasicColumn } from '/@/components/Table';
+import { BasicColumn, FormProps } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
@@ -9,6 +9,14 @@ export const columns: BasicColumn[] = [
     dataIndex: 'label',
     align: 'left',
     width: 200,
+    slots: { customRender: 'Label' },
+  },
+  {
+    title: '回显样式',
+    dataIndex: 'listClass',
+    align: 'left',
+    width: 200,
+    slots: { customRender: 'ListClass' },
   },
   {
     title: '字典键值',
@@ -46,26 +54,27 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'label',
-    label: '标签',
-    component: 'Input',
-    colProps: { span: 6 },
-  },
-  {
-    field: 'status',
-    label: '状态',
-    component: 'Select',
-    componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+export const searchForm: FormProps = {
+  baseColProps: { lg: 6, md: 8 },
+  labelWidth: 90,
+  schemas: [
+    {
+      field: 'label',
+      label: '标签',
+      component: 'Input',
+      colProps: { span: 6 },
     },
-    colProps: { span: 6 },
-  },
-];
+    {
+      field: 'status',
+      label: '状态',
+      component: 'Select',
+      componentProps: {
+        dictType: 'common_status',
+      },
+      colProps: { span: 6 },
+    },
+  ],
+};
 
 export const formSchema: FormSchema[] = [
   {
@@ -92,15 +101,28 @@ export const formSchema: FormSchema[] = [
     component: 'InputNumber',
   },
   {
+    field: 'cssClass',
+    label: '样式属性',
+    component: 'Input',
+  },
+  {
+    field: 'listClass',
+    label: '回显样式',
+    component: 'Select',
+    slot: 'ListClass',
+  },
+  {
+    field: 'icon',
+    label: '图标',
+    component: 'IconPicker',
+  },
+  {
     field: 'status',
     label: '状态',
     component: 'RadioGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
     required: true,
   },
@@ -108,9 +130,6 @@ export const formSchema: FormSchema[] = [
     field: 'remark',
     label: '备注',
     component: 'InputTextArea',
-    colProps: {
-      lg: 24,
-      md: 24,
-    },
+    colProps: { lg: 24, md: 24 },
   },
 ];

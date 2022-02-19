@@ -16,6 +16,7 @@ import { buildUUID } from '/@/utils/uuid';
 import { isFunction, isBoolean } from '/@/utils/is';
 import { get, cloneDeep } from 'lodash-es';
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
+import { useDict } from '/@/components/Dict';
 
 interface ActionType {
   getPaginationInfo: ComputedRef<boolean | PaginationProps>;
@@ -286,6 +287,9 @@ export function useDataSource(
       if (beforeFetch && isFunction(beforeFetch)) {
         params = (await beforeFetch(params)) || params;
       }
+
+      const { initDict } = useDict();
+      await initDict(propsRef.value.dictTypes);
 
       const res = await api(params);
       rawDataSourceRef.value = res;

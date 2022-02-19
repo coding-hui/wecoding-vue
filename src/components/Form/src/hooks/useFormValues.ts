@@ -23,13 +23,15 @@ export function useFormValues({
       return {};
     }
     const res: Recordable = {};
+    const { transformDateFunc, enctype } = unref(getProps);
+    // console.log('handleFormValues', values);
     for (const item of Object.entries(values)) {
+      // console.log('handleFormValuesItem', item);
       let [, value] = item;
       const [key] = item;
       if (!key || (isArray(value) && value.length === 0) || isFunction(value)) {
         continue;
       }
-      const transformDateFunc = unref(getProps).transformDateFunc;
       if (isObject(value)) {
         value = transformDateFunc?.(value);
       }
@@ -40,7 +42,12 @@ export function useFormValues({
       if (isString(value)) {
         value = value.trim();
       }
-      set(res, key, value);
+      // 表单编码类型
+      if (enctype === 'json') {
+        set(res, key, value);
+      } else if (enctype === 'form-data') {
+        res[key] = value;
+      }
     }
     return handleRangeTimeValue(res);
   }

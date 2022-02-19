@@ -27,9 +27,10 @@
       const parentId = ref(null);
 
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
-        labelWidth: 80,
         schemas: formSchema,
         showActionButtonGroup: false,
+        showSubmitButton: false,
+        labelWidth: 120,
         baseColProps: { lg: 12, md: 24 },
       });
 
@@ -60,7 +61,6 @@
             children: treeData,
           },
         ];
-        console.log(rootMenu);
         await updateSchema({
           field: 'parentId',
           componentProps: { treeData: rootMenu },

@@ -7,8 +7,6 @@ import { isBoolean, isFunction, isNumber, isObject } from '/@/utils/is';
 import { useBreakpoint } from '/@/hooks/event/useBreakpoint';
 import { useDebounceFn } from '@vueuse/core';
 
-const BASIC_COL_LEN = 24;
-
 interface UseAdvancedContext {
   advanceState: AdvanceState;
   emit: EmitType;
@@ -27,6 +25,25 @@ export default function ({
   defaultValueRef,
 }: UseAdvancedContext) {
   const { realWidthRef, screenEnum, screenRef } = useBreakpoint();
+
+  function BASIC_COL_LEN(): number {
+    let len: number;
+    const width = unref(realWidthRef);
+    const { baseColProps, actionColOptions } = unref(getProps);
+    const { span, xs, sm, md, lg, xl, xxl } = { ...baseColProps, ...actionColOptions };
+    if (span) {
+      len = span as number;
+    } else if (width <= screenEnum.LG) {
+      len = (md || sm || xs || span) as number;
+    } else if (width < screenEnum.XL) {
+      len = (lg || md || sm || xs || span) as number;
+    } else if (width < screenEnum.XXL) {
+      len = (xl || lg || md || sm || xs || span) as number;
+    } else {
+      len = (xxl || xl || lg || md || sm || xs || span) as number;
+    }
+    return 24 - len;
+  }
 
   const getEmptySpan = computed((): number => {
     if (!advanceState.isAdvanced) {
@@ -69,7 +86,7 @@ export default function ({
       parseInt(itemCol.xs as string) ||
       parseInt(itemCol.sm as string) ||
       (itemCol.span as number) ||
-      BASIC_COL_LEN;
+      BASIC_COL_LEN();
 
     const lgWidth = parseInt(itemCol.lg as string) || mdWidth;
     const xlWidth = parseInt(itemCol.xl as string) || lgWidth;
@@ -86,13 +103,13 @@ export default function ({
 
     if (isLastAction) {
       advanceState.hideAdvanceBtn = false;
-      if (itemColSum <= BASIC_COL_LEN * 2) {
+      if (itemColSum <= BASIC_COL_LEN() * 2) {
         // When less than or equal to 2 lines, the collapse and expand buttons are not displayed
         advanceState.hideAdvanceBtn = true;
         advanceState.isAdvanced = true;
       } else if (
-        itemColSum > BASIC_COL_LEN * 2 &&
-        itemColSum <= BASIC_COL_LEN * (unref(getProps).autoAdvancedLine || 3)
+        itemColSum > BASIC_COL_LEN() * 2 &&
+        itemColSum <= BASIC_COL_LEN() * (unref(getProps).autoAdvancedLine || 3)
       ) {
         advanceState.hideAdvanceBtn = false;
 
@@ -103,7 +120,7 @@ export default function ({
       }
       return { isAdvanced: advanceState.isAdvanced, itemColSum };
     }
-    if (itemColSum > BASIC_COL_LEN * (unref(getProps).alwaysShowLines || 1)) {
+    if (itemColSum > BASIC_COL_LEN() * (unref(getProps).alwaysShowLines || 1)) {
       return { isAdvanced: advanceState.isAdvanced, itemColSum };
     } else {
       // The first line is always displayed
@@ -149,10 +166,9 @@ export default function ({
         schema.isAdvanced = isAdvanced;
       }
     }
+    advanceState.actionSpan = (realItemColSum % BASIC_COL_LEN()) + unref(getEmptySpan);
 
-    advanceState.actionSpan = (realItemColSum % BASIC_COL_LEN) + unref(getEmptySpan);
-
-    getAdvanced(unref(getProps).actionColOptions || { span: BASIC_COL_LEN }, itemColSum, true);
+    getAdvanced(unref(getProps).actionColOptions || { span: BASIC_COL_LEN() }, itemColSum, true);
 
     emit('advanced-change');
   }

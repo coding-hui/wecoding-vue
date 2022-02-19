@@ -2,7 +2,7 @@ import type { ValidationRule } from 'ant-design-vue/lib/form/Form';
 import type { ComponentType } from './types/index';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { dateUtil } from '/@/utils/dateUtil';
-import { isNumber, isObject } from '/@/utils/is';
+import { isNumber } from '/@/utils/is';
 
 const { t } = useI18n();
 
@@ -35,6 +35,8 @@ function genType() {
   return [...DATE_TYPE, 'RangePicker'];
 }
 
+export const dateItemType = genType();
+
 export function setComponentRuleType(
   rule: ValidationRule,
   component: ComponentType,
@@ -49,24 +51,33 @@ export function setComponentRuleType(
   }
 }
 
-export function processDateValue(attr: Recordable, component: string) {
-  const { valueFormat, value } = attr;
-  if (valueFormat) {
-    attr.value = isObject(value) ? dateUtil(value).format(valueFormat) : value;
-  } else if (DATE_TYPE.includes(component) && value) {
-    attr.value = dateUtil(attr.value);
+export function processDateValue(value: Recordable, component: ComponentType, componentProps: any) {
+  if (!value || !component) return value;
+  const { valueFormat } = componentProps;
+  if (dateItemType.includes(component)) {
+    if (Array.isArray(value)) {
+      const arr: any[] = [];
+      for (const val of value) {
+        if (valueFormat) {
+          arr.push(val ? dateUtil(val).format(valueFormat) : null);
+        } else {
+          arr.push(val ? dateUtil(val) : null);
+        }
+      }
+      return arr;
+    }
+    if (valueFormat) {
+      return dateUtil(value).format(valueFormat);
+    }
+    return dateUtil(value);
   }
+  return value;
 }
 
-export function handleInputNumberValue(component?: ComponentType, val?: any) {
-  if (!component) return val;
+export function processNumberValue(value: Recordable, component: ComponentType) {
+  if (!value || !component) return value;
   if (['Input', 'InputPassword', 'InputSearch', 'InputTextArea'].includes(component)) {
-    return val && isNumber(val) ? `${val}` : val;
+    return isNumber(value) ? `${value}` : value;
   }
-  return val;
+  return value;
 }
-
-/**
- * 时间字段
- */
-export const dateItemType = genType();

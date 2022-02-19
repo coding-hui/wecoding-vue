@@ -1,8 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { formatToDateTime } from '/@/utils/dateUtil';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -22,16 +20,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'sex',
     align: 'left',
     width: 50,
-    customRender: ({ record }) => {
-      switch (record.sex) {
-        case 1:
-          return '男';
-        case 2:
-          return '女';
-        default:
-          return '未知';
-      }
-    },
+    dictType: 'sex',
   },
   {
     title: '注册时间',
@@ -53,13 +42,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 80,
-    customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 0;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '正常' : '锁定';
-      return h(Tag, { color: color }, () => text);
-    },
+    dictType: 'common_status',
   },
 ];
 
@@ -110,20 +93,7 @@ export const formSchema: FormSchema[] = [
     label: '性别',
     component: 'Select',
     componentProps: {
-      options: [
-        {
-          label: '男',
-          value: 1,
-        },
-        {
-          label: '女',
-          value: 2,
-        },
-        {
-          label: '示知',
-          value: 3,
-        },
-      ],
+      dictType: 'sex',
     },
   },
   {

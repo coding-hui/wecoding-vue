@@ -229,8 +229,11 @@
         propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
       }
 
-      function setFormModel(key: string, value: any) {
+      function setFormModel(key: string, value: any, labelKey?: string, labelValue?: any) {
         formModel[key] = value;
+        if (labelKey) {
+          formModel[labelKey] = labelValue;
+        }
         const { validateTrigger } = unref(getBindValue);
         if (!validateTrigger || validateTrigger === 'change') {
           validateFields([key]).catch((_) => {});

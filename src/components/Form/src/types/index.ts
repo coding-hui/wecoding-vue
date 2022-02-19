@@ -89,16 +89,12 @@ export type ComponentType =
   | 'InputNumber'
   | 'InputCountDown'
   | 'Select'
-  | 'ApiSelect'
   | 'TreeSelect'
-  | 'ApiTreeSelect'
-  | 'ApiRadioGroup'
   | 'RadioButtonGroup'
   | 'RadioGroup'
   | 'Checkbox'
   | 'CheckboxGroup'
   | 'AutoComplete'
-  | 'ApiCascader'
   | 'Cascader'
   | 'DatePicker'
   | 'MonthPicker'
@@ -112,4 +108,5 @@ export type ComponentType =
   | 'Render'
   | 'Slider'
   | 'Rate'
-  | 'Divider';
+  | 'Divider'
+  | 'FormGroup';

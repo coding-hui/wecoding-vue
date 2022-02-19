@@ -78,15 +78,8 @@
     rowKey: 'tableId',
     formConfig: {
       labelWidth: 90,
+      baseColProps: { lg: 6, md: 8 },
       schemas: searchFormSchema,
-      compact: true,
-      autoSubmitOnEnter: true,
-      showAdvancedButton: true,
-      autoAdvancedLine: 1,
-      showActionButtonGroup: true,
-      actionColOptions: {
-        span: 6,
-      },
     },
     useSearchForm: true,
     showTableSetting: true,

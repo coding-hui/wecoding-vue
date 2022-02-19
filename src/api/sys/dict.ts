@@ -26,6 +26,10 @@ export const getDictDataById = (id: string) => {
   return defHttp.get<SysDictData>({ url: `${RootPath}/data/${id}` });
 };
 
+export const getDictDataByType = (type: string) => {
+  return defHttp.get<SysDictData>({ url: `${RootPath}/data/type/${type}` });
+};
+
 export const saveOrUpdateDictType = (data: SysDictType, isUpdate: boolean) => {
   const config = {
     url: `${RootPath}`,

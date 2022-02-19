@@ -1,7 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
 import { Icon } from '/@/components/Icon';
 
 export const columns: BasicColumn[] = [
@@ -29,26 +28,7 @@ export const columns: BasicColumn[] = [
     title: '类型',
     dataIndex: 'type',
     width: 80,
-    customRender: ({ record }) => {
-      const type = record.type;
-      let color = '',
-        text = '';
-      switch (type) {
-        case '0':
-          color = 'success';
-          text = '目录';
-          break;
-        case '1':
-          color = 'processing';
-          text = '菜单';
-          break;
-        case '2':
-          color = 'warning';
-          text = '按钮';
-          break;
-      }
-      return h(Tag, { color: color }, () => text);
-    },
+    dictType: 'menu_type',
   },
   {
     title: '权限标识',
@@ -70,13 +50,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 80,
-    customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 0;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '启用' : '停用';
-      return h(Tag, { color: color }, () => text);
-    },
+    dictType: 'common_status',
   },
 ];
 
@@ -89,21 +63,14 @@ export const searchFormSchema: FormSchema[] = [
     field: 'name',
     label: '菜单名称',
     component: 'Input',
-    labelWidth: 70,
-    colProps: { span: 6 },
   },
   {
     field: 'status',
     label: '状态',
-    labelWidth: 40,
     component: 'Select',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
-    colProps: { span: 6 },
   },
 ];
 
@@ -120,11 +87,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '目录', value: '0' },
-        { label: '菜单', value: '1' },
-        { label: '按钮', value: '2' },
-      ],
+      dictType: 'menu_type',
     },
     colProps: { lg: 24, md: 24 },
   },
@@ -186,38 +149,27 @@ export const formSchema: FormSchema[] = [
   {
     field: 'status',
     label: '状态',
-    component: 'RadioButtonGroup',
+    component: 'RadioGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
   },
   {
     field: 'cached',
     label: '是否缓存',
-    component: 'RadioButtonGroup',
-    defaultValue: '0',
+    component: 'RadioGroup',
     componentProps: {
-      options: [
-        { label: '否', value: false },
-        { label: '是', value: true },
-      ],
+      dictType: 'yes_or_no',
     },
     ifShow: ({ values }) => isMenu(values.type),
   },
   {
     field: 'visible',
     label: '是否显示',
-    component: 'RadioButtonGroup',
-    defaultValue: ({ values }) => !isButton(values.type),
+    component: 'RadioGroup',
     componentProps: {
-      options: [
-        { label: '是', value: true },
-        { label: '否', value: false },
-      ],
+      dictType: 'yes_or_no',
     },
     ifShow: ({ values }) => !isButton(values.type),
   },

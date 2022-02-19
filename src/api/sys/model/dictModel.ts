@@ -15,6 +15,9 @@ export interface SysDictData {
   sort: string;
   label: string;
   value?: string;
+  cssClass?: string;
+  listClass?: string;
+  icon?: string;
   defaultValue: string;
   status?: string;
   remark: string;

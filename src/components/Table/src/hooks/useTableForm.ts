@@ -14,10 +14,12 @@ export function useTableForm(
     const { formConfig } = unref(propsRef);
     const { submitButtonOptions } = formConfig || {};
     return {
-      showAdvancedButton: true,
       ...formConfig,
-      submitButtonOptions: { loading: unref(getLoading), ...submitButtonOptions },
       compact: true,
+      enctype: 'form-data',
+      showAdvancedButton: true,
+      showActionButtonGroup: true,
+      submitButtonOptions: { loading: unref(getLoading), ...submitButtonOptions },
     };
   });
 

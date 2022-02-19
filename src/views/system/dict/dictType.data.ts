@@ -1,11 +1,8 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { h } from 'vue';
-import { Button, Tag } from 'ant-design-vue';
-import { PageEnum } from '/@/enums/pageEnum';
-import { router } from '/@/router';
+import { FormProps } from '/@/components/Form';
 
-export const columns: BasicColumn[] = [
+export const tableColumns: BasicColumn[] = [
   {
     title: '字典名称',
     dataIndex: 'name',
@@ -17,18 +14,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'type',
     align: 'left',
     width: 200,
-    customRender: ({ record }) => {
-      return h(
-        Button,
-        {
-          type: 'link',
-          onClick: () => {
-            router.push(`${PageEnum.DICT_DATA}/${record.type}`);
-          },
-        },
-        () => record.type,
-      );
-    },
+    slots: { customRender: 'Type' },
   },
   {
     title: '排序',
@@ -38,14 +24,8 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
+    dictType: 'common_status',
     width: 80,
-    customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 0;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '启用' : '停用';
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: '备注',
@@ -54,32 +34,30 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'name',
-    label: '名称',
-    component: 'Input',
-    colProps: { span: 6 },
-  },
-  {
-    field: 'type',
-    label: '类型',
-    component: 'Input',
-    colProps: { span: 6 },
-  },
-  {
-    field: 'status',
-    label: '状态',
-    component: 'Select',
-    componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+export const searchForm: FormProps = {
+  baseColProps: { lg: 6, md: 8 },
+  labelWidth: 90,
+  schemas: [
+    {
+      field: 'name',
+      label: '名称',
+      component: 'Input',
     },
-    colProps: { span: 6 },
-  },
-];
+    {
+      field: 'type',
+      label: '类型',
+      component: 'Input',
+    },
+    {
+      field: 'status',
+      label: '状态',
+      component: 'Select',
+      componentProps: {
+        dictType: 'common_status',
+      },
+    },
+  ],
+};
 
 export const formSchema: FormSchema[] = [
   {
@@ -111,10 +89,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
     required: true,
   },

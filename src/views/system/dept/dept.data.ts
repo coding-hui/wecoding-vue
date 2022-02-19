@@ -1,7 +1,5 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -30,13 +28,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 80,
-    customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 0;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '启用' : '停用';
-      return h(Tag, { color: color }, () => text);
-    },
+    dictType: 'common_status',
   },
 ];
 
@@ -46,12 +38,8 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
-    colProps: { span: 6 },
   },
 ];
 
@@ -103,13 +91,10 @@ export const formSchema: FormSchema[] = [
   {
     field: 'status',
     label: '状态',
-    component: 'RadioGroup',
+    component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
     required: true,
   },

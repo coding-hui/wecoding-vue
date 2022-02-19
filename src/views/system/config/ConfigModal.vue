@@ -28,14 +28,8 @@
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         schemas: formSchema,
         showActionButtonGroup: false,
-        labelCol: {
-          xs: { span: 24, offset: 0 },
-          sm: { span: 5, offset: 0 },
-        },
-        wrapperCol: {
-          xs: { span: 24, offset: 0 },
-          sm: { span: 15, offset: 0 },
-        },
+        labelWidth: 120,
+        baseColProps: { lg: 12, md: 24 },
       });
 
       const [registerDrawer, { setModalProps, closeModal }] = useModalInner(async (data) => {

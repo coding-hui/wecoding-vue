@@ -10,7 +10,7 @@ import { cloneDeep, isEqual } from 'lodash-es';
 import { formatToDate } from '/@/utils/dateUtil';
 import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, PAGE_SIZE } from '../const';
 
-function handleItem(item: BasicColumn, ellipsis: boolean) {
+function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>) {
   const { key, dataIndex, children } = item;
   item.align = item.align || DEFAULT_ALIGN;
   if (ellipsis) {
@@ -24,16 +24,29 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
     }
   }
   if (children && children.length) {
-    handleChildren(children, !!ellipsis);
+    handleChildren(children, !!ellipsis, dictTypes);
+  }
+  if (item.dictType) {
+    dictTypes.add(item.dictType);
+    if (!item.slots?.customRender) {
+      if (!item.slots) {
+        item.slots = {};
+      }
+      item.slots.customRender = 'dictLabelColumn';
+    }
   }
 }
 
-function handleChildren(children: BasicColumn[] | undefined, ellipsis: boolean) {
+function handleChildren(
+  children: BasicColumn[] | undefined,
+  ellipsis: boolean,
+  dictTypes: Set<string>,
+) {
   if (!children) return;
   children.forEach((item) => {
     const { children } = item;
-    handleItem(item, ellipsis);
-    handleChildren(children, ellipsis);
+    handleItem(item, ellipsis, dictTypes);
+    handleChildren(children, ellipsis, dictTypes);
   });
 }
 
@@ -89,11 +102,15 @@ function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: Bas
   const { actionColumn } = unref(propsRef);
   if (!actionColumn) return;
 
+  const { t } = useI18n();
   const hasIndex = columns.findIndex((column) => column.flag === ACTION_COLUMN_FLAG);
   if (hasIndex === -1) {
     columns.push({
       ...columns[hasIndex],
+      dataIndex: 'actions',
+      title: t('操作'),
       fixed: 'right',
+      slots: { customRender: 'tableActions' },
       ...actionColumn,
       flag: ACTION_COLUMN_FLAG,
     });
@@ -117,12 +134,19 @@ export function useColumns(
     }
     const { ellipsis } = unref(propsRef);
 
+    propsRef.value.dictTypes = new Set<string>();
+    const dictTypes = propsRef.value.dictTypes;
+
     columns.forEach((item) => {
-      const { customRender, slots } = item;
+      // const { customRender, slots } = item;
 
       handleItem(
         item,
-        Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
+        // Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
+        Reflect.has(item, 'ellipsis')
+          ? !!item.ellipsis
+          : !!ellipsis && item.dataIndex !== 'actions', // 自定义渲染列应和非自定义的省略条件一样
+        dictTypes,
       );
     });
     return columns;
@@ -216,25 +240,18 @@ export function useColumns(
       const columnKeys = columns as string[];
       const newColumns: BasicColumn[] = [];
       cacheColumns.forEach((item) => {
-        if (columnKeys.includes(item.dataIndex! || (item.key as string))) {
-          newColumns.push({
-            ...item,
-            defaultHidden: false,
-          });
-        } else {
-          newColumns.push({
-            ...item,
-            defaultHidden: true,
-          });
-        }
+        newColumns.push({
+          ...item,
+          defaultHidden: !columnKeys.includes(item.dataIndex! || (item.key as string)),
+        });
       });
 
       // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
         newColumns.sort((prev, next) => {
           return (
-            cacheKeys.indexOf(prev.dataIndex as string) -
-            cacheKeys.indexOf(next.dataIndex as string)
+            columnKeys.indexOf(prev.dataIndex as string) -
+            columnKeys.indexOf(next.dataIndex as string)
           );
         });
       }

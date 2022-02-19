@@ -51,22 +51,16 @@
         api: findConfigList,
         columns,
         rowKey: 'configId',
-        formConfig: {
-          labelWidth: 90,
-          schemas: searchFormSchema,
-          compact: true,
-          autoSubmitOnEnter: true,
-          showAdvancedButton: true,
-          autoAdvancedLine: 1,
-          showActionButtonGroup: true,
-          actionColOptions: {
-            span: 6,
-          },
-        },
         useSearchForm: true,
         showTableSetting: true,
         showIndexColumn: true,
         canResize: false,
+        formConfig: {
+          compact: true,
+          labelWidth: 90,
+          schemas: searchFormSchema,
+          baseColProps: { lg: 6, md: 8 },
+        },
         actionColumn: {
           width: 80,
           title: '操作',

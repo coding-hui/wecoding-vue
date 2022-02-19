@@ -1,7 +1,5 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -30,13 +28,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 80,
-    customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 0;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '启用' : '停用';
-      return h(Tag, { color: color }, () => text);
-    },
+    dictType: 'common_status',
   },
 ];
 
@@ -45,21 +37,14 @@ export const searchFormSchema: FormSchema[] = [
     field: 'name',
     label: '角色名称',
     component: 'Input',
-    labelWidth: 70,
-    colProps: { span: 6 },
   },
   {
     field: 'status',
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
-    labelWidth: 40,
-    colProps: { span: 6 },
   },
 ];
 
@@ -93,10 +78,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
-      ],
+      dictType: 'common_status',
     },
     required: true,
   },
@@ -150,13 +132,7 @@ export const roleDeptFormSchema: FormSchema[] = [
     label: '数据范围类型',
     component: 'Select',
     componentProps: {
-      options: [
-        { label: '全部数据', value: '1' },
-        { label: '本部门及以下数据', value: '2' },
-        { label: '本部门数据', value: '3' },
-        { label: '仅本人数据', value: '4' },
-        { label: '自定义数据', value: '5' },
-      ],
+      dictType: 'data_scope_type',
     },
     required: true,
   },

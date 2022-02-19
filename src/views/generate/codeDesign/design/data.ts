@@ -229,7 +229,7 @@ export const schemas: FormSchema[] = [
   },
   {
     field: 'parentMenuId',
-    component: 'ApiTreeSelect',
+    component: 'TreeSelect',
     label: '上级菜单',
     helpMessage: '分配到指定菜单下，例如 系统管理',
     componentProps: {

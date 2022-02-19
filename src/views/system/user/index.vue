@@ -60,8 +60,8 @@
         columns,
         rowKey: 'userId',
         formConfig: {
-          labelWidth: 70,
-          labelAlign: 'left',
+          baseColProps: { lg: 6, md: 8 },
+          labelWidth: 90,
           schemas: searchFormSchema,
           autoSubmitOnEnter: true,
           rowProps: {

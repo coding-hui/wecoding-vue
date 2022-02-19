@@ -56,16 +56,17 @@
         api: findLogList,
         columns,
         rowKey: 'id',
-        formConfig: {
-          labelWidth: 120,
-          schemas: searchFormSchema,
-          autoSubmitOnEnter: true,
-          showAdvancedButton: true,
-        },
         useSearchForm: true,
         showTableSetting: true,
         showIndexColumn: true,
         canResize: false,
+        formConfig: {
+          baseColProps: { lg: 6, md: 8 },
+          labelWidth: 90,
+          schemas: searchFormSchema,
+          autoSubmitOnEnter: true,
+          showAdvancedButton: true,
+        },
         actionColumn: {
           width: 80,
           title: '操作',

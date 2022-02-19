@@ -11,6 +11,11 @@ export const basicProps = {
     type: Object as PropType<Recordable>,
     default: {},
   },
+  // json | form-data
+  enctype: {
+    type: String as PropType<string>,
+    default: 'json',
+  },
   // 标签宽度  固定宽度
   labelWidth: {
     type: [Number, String] as PropType<number | string>,
@@ -57,13 +62,13 @@ export const basicProps = {
     },
   },
   rulesMessageJoinLabel: propTypes.bool.def(true),
-  // 超过3行自动折叠
-  autoAdvancedLine: propTypes.number.def(3),
+  // 超过1行自动折叠
+  autoAdvancedLine: propTypes.number.def(1),
   // 不受折叠影响的行数
   alwaysShowLines: propTypes.number.def(1),
 
   // 是否显示操作按钮
-  showActionButtonGroup: propTypes.bool.def(true),
+  showActionButtonGroup: propTypes.bool.def(false),
   // 操作列Col配置
   actionColOptions: Object as PropType<Partial<ColEx>>,
   // 显示重置按钮

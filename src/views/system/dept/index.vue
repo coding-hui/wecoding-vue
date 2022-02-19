@@ -57,17 +57,17 @@
         api: findDeptList,
         columns,
         rowKey: 'deptId',
-        formConfig: {
-          labelWidth: 40,
-          labelAlign: 'left',
-          schemas: searchFormSchema,
-          autoSubmitOnEnter: true,
-        },
         isTreeTable: true,
         useSearchForm: true,
         showTableSetting: true,
         showIndexColumn: false,
         canResize: false,
+        formConfig: {
+          compact: true,
+          labelWidth: 90,
+          schemas: searchFormSchema,
+          baseColProps: { lg: 6, md: 8 },
+        },
         actionColumn: {
           width: 80,
           title: '操作',

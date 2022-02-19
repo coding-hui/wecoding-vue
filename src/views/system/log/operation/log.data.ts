@@ -1,7 +1,5 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -33,6 +31,7 @@ export const columns: BasicColumn[] = [
   {
     title: '业务类型',
     dataIndex: 'businessType',
+    dictType: 'op_type',
   },
   {
     title: '创建时间',
@@ -42,13 +41,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'type',
     width: 80,
-    customRender: ({ record }) => {
-      const status = record.type;
-      const enable = ~~status === 1;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '成功' : '失败';
-      return h(Tag, { color: color }, () => text);
-    },
+    dictType: 'op_run_status',
   },
 ];
 
@@ -60,14 +53,11 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'status',
+    field: 'businessType',
     label: '业务类型',
     component: 'Select',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+      dictType: 'op_type',
     },
     colProps: { span: 8 },
   },
@@ -133,6 +123,9 @@ export const formSchema: FormSchema[] = [
     label: '业务操作类型',
     field: 'businessType',
     component: 'Select',
+    componentProps: {
+      dictType: 'op_type',
+    },
   },
   {
     label: '请求参数',
