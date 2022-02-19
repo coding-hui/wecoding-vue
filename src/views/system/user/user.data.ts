@@ -4,18 +4,10 @@ import { formatToDateTime } from '/@/utils/dateUtil';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 
-import { findDeptTreeSelect } from '/@/api/sys/dept';
-
 export const columns: BasicColumn[] = [
   {
     title: '用户名称',
-    dataIndex: 'realName',
-    align: 'left',
-    width: 200,
-  },
-  {
-    title: '部门',
-    dataIndex: 'dept.name',
+    dataIndex: 'nickName',
     align: 'left',
     width: 200,
   },
@@ -24,18 +16,6 @@ export const columns: BasicColumn[] = [
     dataIndex: 'account',
     align: 'left',
     width: 200,
-  },
-  {
-    title: '电话',
-    dataIndex: 'phone',
-    align: 'left',
-    width: 100,
-  },
-  {
-    title: '邮箱',
-    dataIndex: 'email',
-    align: 'left',
-    width: 150,
   },
   {
     title: '性别',
@@ -51,6 +31,14 @@ export const columns: BasicColumn[] = [
         default:
           return '未知';
       }
+    },
+  },
+  {
+    title: '注册时间',
+    dataIndex: 'updateTime',
+    width: 110,
+    format: (record) => {
+      return !record ? '--' : formatToDateTime(record, 'YYYY-MM-DD HH:mm');
     },
   },
   {
@@ -82,12 +70,6 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Input',
     colProps: { span: 6 },
   },
-  {
-    field: 'account',
-    label: '登录账号',
-    component: 'Input',
-    colProps: { span: 6 },
-  },
 ];
 
 export const formSchema: FormSchema[] = [
@@ -96,17 +78,6 @@ export const formSchema: FormSchema[] = [
     field: 'userId',
     component: 'Input',
     show: false,
-  },
-  {
-    field: 'deptId',
-    label: '归属部门',
-    component: 'ApiTreeSelect',
-    componentProps: {
-      api: findDeptTreeSelect,
-      replaceFields: {},
-      getPopupContainer: () => document.body,
-    },
-    required: true,
   },
   {
     field: 'account',
