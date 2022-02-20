@@ -141,7 +141,7 @@
         </template>
         <template #queryType="{ record }">
           <div>
-            <Select style="width: 100%" v-model:value="record.queryType">
+            <Select style="width: 100%" allowClear v-model:value="record.queryType">
               <SelectOption value="=">EQ</SelectOption>
               <SelectOption value="!=">NE</SelectOption>
               <SelectOption value=">">GT</SelectOption>
@@ -155,7 +155,7 @@
         </template>
         <template #htmlType="{ record }">
           <div>
-            <Select style="width: 100%" v-model:value="record.htmlType">
+            <Select style="width: 100%" allowClear v-model:value="record.htmlType">
               <SelectOption value="input">文本框</SelectOption>
               <SelectOption value="textarea">文本域</SelectOption>
               <SelectOption value="select">下拉框</SelectOption>
@@ -178,17 +178,12 @@
         </template>
         <template #dictType="{ record }">
           <div>
-            <Select style="width: 100%" v-model:value="record.dictType">
-              <SelectOption value="input">文本框</SelectOption>
-              <SelectOption value="textarea">文本域</SelectOption>
-              <SelectOption value="select">下拉框</SelectOption>
-              <SelectOption value="radio">单选框</SelectOption>
-              <SelectOption value="checkbox">复选框</SelectOption>
-              <SelectOption value="datetime">日期控件</SelectOption>
-              <SelectOption value="imageUpload">图片上传</SelectOption>
-              <SelectOption value="fileUpload">文件上传</SelectOption>
-              <SelectOption value="editor">富文本控件</SelectOption>
-            </Select>
+            <Select
+              style="width: 100%"
+              allowClear
+              v-model:value="record.dictType"
+              :options="dictTypeList"
+            />
           </div>
         </template>
       </Table>
@@ -219,6 +214,7 @@
   import PreviewCodeModal from '../PreviewCodeModal.vue';
 
   import { getGenTableById, syncDb, updateGenTable } from '/@/api/gen/table';
+  import { findDictTypeOptions } from '/@/api/sys/dict';
   import { useLoading } from '/@/components/Loading';
   import { useModal } from '/@/components/Modal';
 
@@ -265,6 +261,8 @@
         tip: '加载中...',
       });
 
+      const dictTypeList = ref();
+
       const [register, { validate, setFieldsValue }] = useForm({
         baseColProps: {
           span: 6,
@@ -293,10 +291,17 @@
             genData.tableRows = rows;
             genData.tables = tables;
             setFieldsValue(genData.tableInfo);
+            getDictTypes();
           })
           .finally(() => {
             closeFullLoading();
           });
+      }
+
+      function getDictTypes() {
+        findDictTypeOptions().then((res) => {
+          dictTypeList.value = res;
+        });
       }
 
       function checkColumnEditable(data) {
@@ -382,6 +387,7 @@
         handleSyncDB,
         open,
         ...toRefs(genData),
+        dictTypeList,
         tabList,
         key,
         visibleRef,

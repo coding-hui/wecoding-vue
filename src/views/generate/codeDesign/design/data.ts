@@ -109,32 +109,6 @@ export const columns = [
   },
 ];
 
-const generateType: LabelValueOptions = [
-  {
-    label: 'zip',
-    value: '1',
-  },
-  {
-    label: '自定义路径',
-    value: '2',
-  },
-];
-
-const genTemplatePlan: LabelValueOptions = [
-  {
-    label: '单表（增删改查）',
-    value: 'crud',
-  },
-  {
-    label: '树表（增删改查）',
-    value: 'tree',
-  },
-  {
-    label: '主子表（增删改查）',
-    value: 'sub',
-  },
-];
-
 const isZip = (type: string) => type === '1';
 // const isCustom = (type: string) => type === '2';
 // const isCrud = (type: string) => type === 'crud';
@@ -182,7 +156,7 @@ export const schemas: FormSchema[] = [
     field: 'generatePlan',
     component: 'Select',
     componentProps: {
-      options: genTemplatePlan,
+      dictType: 'gen_template_plan',
     },
     label: '生成方案',
     required: true,
@@ -247,10 +221,7 @@ export const schemas: FormSchema[] = [
     component: 'RadioButtonGroup',
     label: '表单风格',
     componentProps: {
-      options: [
-        { label: '抽屉', value: 'drawer' },
-        { label: '弹框', value: 'modal' },
-      ],
+      dictType: 'gen_form_style',
     },
     colProps: {
       offset: 2,
@@ -262,7 +233,7 @@ export const schemas: FormSchema[] = [
     label: '生成代码方式',
     helpMessage: '默认为zip压缩包下载，也可以自定义生成路径',
     componentProps: {
-      options: generateType,
+      dictType: 'gen_download_type',
     },
     colProps: {
       offset: 2,

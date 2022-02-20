@@ -8,6 +8,7 @@
         <a @click="go(`${PageEnum.DICT_DATA}/${record.type}`)" :title="record.type">
           {{ record.type }}
         </a>
+        <CopyTwoTone class="ml-1" @click="handleCopy(record.type)" />
       </template>
       <template #action="{ record }">
         <TableAction
@@ -36,13 +37,16 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, unref } from 'vue';
 
+  import { CopyTwoTone } from '@ant-design/icons-vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { findDictTypeList, removeDictType } from '/@/api/sys/dict';
 
   import { useGo } from '/@/hooks/web/usePage';
   import { useModal } from '/@/components/Modal';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import DictTypeModal from './DictTypeModal.vue';
   import { PageEnum } from '/@/enums/pageEnum';
 
@@ -50,9 +54,11 @@
 
   export default defineComponent({
     name: 'DictManagement',
-    components: { BasicTable, DictTypeModal, TableAction },
+    components: { BasicTable, DictTypeModal, TableAction, CopyTwoTone },
     setup() {
       const go = useGo();
+      const { createMessage } = useMessage();
+      const { clipboardRef, copiedRef } = useCopyToClipboard();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '字典列表',
@@ -72,6 +78,13 @@
           fixed: undefined,
         },
       });
+
+      function handleCopy(type) {
+        clipboardRef.value = type;
+        if (unref(copiedRef)) {
+          createMessage.success('copy success！');
+        }
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -101,6 +114,7 @@
         PageEnum,
         registerTable,
         registerModal,
+        handleCopy,
         handleCreate,
         handleEdit,
         handleDelete,

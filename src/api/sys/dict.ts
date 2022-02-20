@@ -14,6 +14,10 @@ export const findDictTypeList = (params: SysDictTypeParams) => {
   return defHttp.get<getDictTypesResultModel>({ url: `${RootPath}/page`, params: params });
 };
 
+export const findDictTypeOptions = (params?: SysDictTypeParams) => {
+  return defHttp.get<getDictTypesResultModel>({ url: `${RootPath}/options`, params: params });
+};
+
 export const findDictDataList = (params: SysDictDataParams) => {
   return defHttp.get<getDictDataResultModel>({ url: `${RootPath}/data/page`, params: params });
 };
