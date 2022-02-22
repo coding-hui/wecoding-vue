@@ -2,7 +2,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <!--        <a-button type="primary" @click="handleReadAll"> 本页全读 </a-button>-->
+        <a-button type="primary" @click="handleReadAll"> 本页全读 </a-button>
       </template>
       <template #Content="{ record }">
         <div v-text="record.content"></div>
@@ -84,7 +84,9 @@
         }
         setLoading(true);
         readMessage({ userId: getUserInfo.userId, messageIds: unReadMessageIds }).finally(() => {
-          setLoading(false);
+          reload().then(() => {
+            setLoading(false);
+          });
         });
       }
 

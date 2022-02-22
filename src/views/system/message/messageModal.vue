@@ -49,6 +49,8 @@
             .finally(() => {
               setModalProps({ confirmLoading: false });
             });
+        } else {
+          await setFieldsValue({ content: null });
         }
       });
 

@@ -108,12 +108,14 @@ export const formSchema: FormSchema[] = [
   {
     label: '标题',
     field: 'title',
+    required: true,
     component: 'Input',
   },
   {
     label: '类型',
     field: 'messageType',
     component: 'Select',
+    required: true,
     componentProps: {
       dictType: 'mes_message_type',
     },
@@ -126,6 +128,7 @@ export const formSchema: FormSchema[] = [
     render: ({ model, field }) => {
       return h(Tinymce, {
         value: model[field],
+        showImageUpload: false,
         onChange: (value: string) => {
           model[field] = value;
         },
