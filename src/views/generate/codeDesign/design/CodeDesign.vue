@@ -93,7 +93,7 @@
             <Select
               style="width: 100%"
               v-model:value="record.javaType"
-              :disabled="!record.whetherPk && checkColumnEditable(record)"
+              :disabled="record.whetherPk || checkColumnEditable(record)"
             >
               <SelectOption value="Long">Long</SelectOption>
               <SelectOption value="String">String</SelectOption>

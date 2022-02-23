@@ -73,27 +73,25 @@
   }
 
   async function handleSubmit() {
-    try {
-      setModalProps({ confirmLoading: true });
-      let selectRows = getSelectRows();
-      if (selectRows.length === 0) {
-        createMessage.warning('请至少选择一条数据');
-        return;
-      }
-
-      const params = {
-        tables: selectRows,
-        dsName: getForm().getFieldsValue().dsName,
-        dsId: unref(dsId),
-      };
-      importDbTable(params)
-        .then(() => {
-          emit('success');
-        })
-        .finally(() => {});
-      closeModal();
-    } finally {
-      setModalProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: true });
+    let selectRows = getSelectRows();
+    if (selectRows.length === 0) {
+      createMessage.warning('请至少选择一条数据');
+      return;
     }
+
+    const params = {
+      tables: selectRows,
+      dsName: getForm().getFieldsValue().dsName,
+      dsId: unref(dsId),
+    };
+    importDbTable(params)
+      .then(() => {
+        emit('success');
+      })
+      .finally(() => {
+        setModalProps({ confirmLoading: false });
+        closeModal();
+      });
   }
 </script>

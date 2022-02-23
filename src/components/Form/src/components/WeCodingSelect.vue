@@ -1,6 +1,12 @@
 <template>
   <div class="wecoding-select">
-    <Select v-bind="getAttrs" v-model:value="state" :options="optionsRef" @click="handleFetch">
+    <Select
+      v-bind="getAttrs"
+      v-model:value="state"
+      :options="optionsRef"
+      @change="handleChange"
+      @click="handleFetch"
+    >
       <template #[item]="data" v-for="item in Object.keys($slots)">
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
@@ -65,6 +71,7 @@
       const attrs = useAttrs();
       const optionsRef = ref<Recordable[]>(props.options);
       const isFirstLoad = ref<Boolean>(false);
+      const emitData = ref<any[]>([]);
       const loading = ref<Boolean>(false);
 
       const getAttrs = computed(() => {
@@ -74,7 +81,7 @@
         };
       });
 
-      const [state] = useRuleFormItem(props);
+      const [state] = useRuleFormItem(props, 'value', 'change', emitData);
 
       if (!isEmpty(props.dictType)) {
         const { initSelectOptions } = useDict();
@@ -143,7 +150,11 @@
         emit('click');
       }
 
-      return { t, getAttrs, state, optionsRef, loading, handleFetch };
+      function handleChange(_, ...args) {
+        emitData.value = args;
+      }
+
+      return { t, getAttrs, state, optionsRef, loading, handleFetch, handleChange };
     },
   });
 </script>
