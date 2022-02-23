@@ -1,5 +1,6 @@
 import type { PropType } from 'vue';
 import { FileBasicColumn } from './typing';
+import { uploadApi } from '/@/api/storage/file';
 
 export const basicProps = {
   helpText: {
@@ -31,8 +32,7 @@ export const basicProps = {
   },
   api: {
     type: Function as PropType<PromiseFn>,
-    default: null,
-    required: true,
+    default: uploadApi,
   },
   name: {
     type: String as PropType<string>,
