@@ -1,4 +1,4 @@
-import { BasicPageParams } from '/@/api/model/baseModel';
+import { BasicPageParams, PageResult } from '/@/api/model/baseModel';
 
 export interface Message {
   id: string;
@@ -31,6 +31,6 @@ export interface ReadMessageParams {
   messageIds?: string[];
 }
 
-export type getMessageListResultModel = Message[];
+export type getMessageListResultModel = PageResult<Message>;
 
 export type MessagePageParam = MessageParams & BasicPageParams;

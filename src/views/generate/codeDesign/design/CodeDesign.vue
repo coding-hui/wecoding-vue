@@ -158,11 +158,11 @@
             <Select style="width: 100%" allowClear v-model:value="record.htmlType">
               <SelectOption value="input">文本框</SelectOption>
               <SelectOption value="textarea">文本域</SelectOption>
+              <SelectOption value="inputNumber">密码框</SelectOption>
               <SelectOption value="select">下拉框</SelectOption>
               <SelectOption value="radio">单选框</SelectOption>
               <SelectOption value="checkbox">复选框</SelectOption>
               <SelectOption value="datetime">日期控件</SelectOption>
-              <SelectOption value="imageUpload">图片上传</SelectOption>
               <SelectOption value="fileUpload">文件上传</SelectOption>
               <SelectOption value="editor">富文本控件</SelectOption>
             </Select>
