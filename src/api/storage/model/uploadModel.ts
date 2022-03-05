@@ -1,5 +1,9 @@
 export interface UploadApiResult {
-  message: string;
-  code: number;
-  url: string;
+  errorCode: number;
+  errorMessage: string;
+  success: boolean;
+  result: {
+    filename: string;
+    url: string;
+  };
 }

@@ -130,7 +130,7 @@ export const formSchema: FormSchema[] = [
     component: 'DatePicker',
   },
   {
-    label: '用户登录时保存token的uuid',
+    label: '用户登录token',
     field: 'loginUuid',
     component: 'Input',
   },
