@@ -164,6 +164,7 @@
               <SelectOption value="checkbox">复选框</SelectOption>
               <SelectOption value="datetime">日期控件</SelectOption>
               <SelectOption value="fileUpload">文件上传</SelectOption>
+              <SelectOption value="imageUpload">图片上传</SelectOption>
               <SelectOption value="editor">富文本控件</SelectOption>
             </Select>
           </div>

@@ -7,6 +7,7 @@
       :action="uploadUrl"
       :showUploadList="false"
       accept=".jpg,.jpeg,.gif,.png,.webp"
+      :headers="{ Authorization: 'Bearer ' + getToken }"
     >
       <a-button type="primary" v-bind="{ ...getButtonProps }">
         {{ t('component.upload.imgUpload') }}
@@ -21,6 +22,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useGlobSetting } from '/@/hooks/setting';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { useUserStore } from '/@/store/modules/user';
 
   export default defineComponent({
     name: 'TinymceImageUpload',
@@ -39,6 +41,7 @@
       let uploading = false;
 
       const { uploadUrl } = useGlobSetting();
+      const { getToken } = useUserStore();
       const { t } = useI18n();
       const { prefixCls } = useDesign('tinymce-img-upload');
 
@@ -72,6 +75,7 @@
       return {
         prefixCls,
         handleChange,
+        getToken,
         uploadUrl,
         t,
         getButtonProps,
