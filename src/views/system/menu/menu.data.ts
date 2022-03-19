@@ -54,9 +54,9 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-const isDir = (type: string) => type === '0';
-const isMenu = (type: string) => type === '1';
-const isButton = (type: string) => type === '2';
+export const isDir = (type: string) => type === '0';
+export const isMenu = (type: string) => type === '1';
+export const isButton = (type: string) => type === '2';
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -159,6 +159,7 @@ export const formSchema: FormSchema[] = [
     field: 'cached',
     label: '是否缓存',
     component: 'RadioGroup',
+    defaultValue: 'Y',
     componentProps: {
       dictType: 'yes_or_no',
     },

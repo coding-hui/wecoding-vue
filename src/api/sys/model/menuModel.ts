@@ -21,12 +21,12 @@ export interface SysMenu {
   component?: string;
   permission?: string;
   openType?: string;
-  visible: boolean;
-  frame?: boolean;
+  visible: string;
+  frame?: string;
   link?: string;
   redirect?: string;
   sort?: number;
-  cached?: boolean;
+  cached?: string;
 }
 
 export interface SysMenuParams {

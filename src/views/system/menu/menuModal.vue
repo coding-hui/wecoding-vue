@@ -19,7 +19,7 @@
   import { findMenuSelect, getMenuById, saveOrUpdateMenu } from '/@/api/sys/menu';
 
   export default defineComponent({
-    name: 'MenuDrawer',
+    name: 'MenuModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {

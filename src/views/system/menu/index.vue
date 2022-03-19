@@ -14,6 +14,7 @@
             {
               icon: 'ant-design:plus-outlined',
               onClick: handleCreateChild.bind(null, record),
+              ifShow: !isButton(record.type),
             },
             {
               icon: 'ant-design:delete-outlined',
@@ -38,9 +39,9 @@
   import { findMenuList, removeMenu } from '/@/api/sys/menu';
 
   import { useModal } from '/@/components/Modal';
-  import MenuModal from './MenuModal.vue';
+  import MenuModal from './menuModal.vue';
 
-  import { columns, searchFormSchema } from './menu.data';
+  import { columns, searchFormSchema, isButton } from './menu.data';
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -120,6 +121,7 @@
         handleDelete,
         handleSuccess,
         onFetchSuccess,
+        isButton,
       };
     },
   });
