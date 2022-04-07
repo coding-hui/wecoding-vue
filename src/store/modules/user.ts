@@ -14,7 +14,6 @@ import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
-import mitt, { Emitter } from '/@/utils/mitt';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
@@ -25,7 +24,6 @@ interface UserState {
   sessionTimeout?: boolean;
   lastUpdateTime: number;
   dictCache: any;
-  emitter: Emitter;
 }
 
 export const useUserStore = defineStore({
@@ -43,8 +41,6 @@ export const useUserStore = defineStore({
     lastUpdateTime: 0,
     // 字典缓存，刷新页面失效
     dictCache: {},
-    // 全局事件
-    emitter: mitt(),
   }),
   getters: {
     getUserInfo(): UserInfo {
@@ -64,9 +60,6 @@ export const useUserStore = defineStore({
     },
     getDictCache(): any {
       return this.dictCache;
-    },
-    getEmitter(): any {
-      return this.emitter;
     },
   },
   actions: {
@@ -189,10 +182,6 @@ export const useUserStore = defineStore({
     },
   },
 });
-
-export function useEmitter() {
-  return useUserStore().emitter;
-}
 
 // Need to be used outside the setup
 export function useUserStoreWithOut() {

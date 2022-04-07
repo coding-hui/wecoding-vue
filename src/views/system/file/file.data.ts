@@ -20,11 +20,6 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: '文件内容类型',
-    dataIndex: 'contentType',
-    align: 'left',
-  },
-  {
     title: '业务类型',
     dataIndex: 'bizType',
     align: 'left',
