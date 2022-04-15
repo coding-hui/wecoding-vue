@@ -245,7 +245,6 @@ export function useColumns(
           defaultHidden: !columnKeys.includes(item.dataIndex! || (item.key as string)),
         });
       });
-
       // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
         newColumns.sort((prev, next) => {

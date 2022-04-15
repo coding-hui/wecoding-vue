@@ -70,20 +70,20 @@ git clone https://github.com/anncwb/vue-wecoding-admin.git
 ```bash
 cd vue-wecoding-admin
 
-yarn install
+pnpm install
 
 ```
 
 - run
 
 ```bash
-yarn serve
+pnpm serve
 ```
 
 - build
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ## Change Log
