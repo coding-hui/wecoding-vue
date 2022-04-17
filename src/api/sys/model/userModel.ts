@@ -18,8 +18,14 @@ export interface RoleInfo {
  * @description: Login interface return value
  */
 export interface LoginResultModel {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: string;
+  scope: string;
+  license: string;
   userId: string | number;
-  token: string;
+  username: string;
   role: RoleInfo;
 }
 

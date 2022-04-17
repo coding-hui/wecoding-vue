@@ -16,6 +16,7 @@ import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { formatRequestDate, joinTimestamp } from './helper';
 import { useUserStoreWithOut } from '/@/store/modules/user';
+import { Base64 } from 'js-base64';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
@@ -143,11 +144,17 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token = getToken();
+    const { clientId, clientSecret } = globSetting;
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
+    } else {
+      // 添加客户端信息
+      (config as Recordable).headers.Authorization = `Basic ${Base64.encode(
+        `${clientId}:${clientSecret}`,
+      )}`;
     }
     return config;
   },
