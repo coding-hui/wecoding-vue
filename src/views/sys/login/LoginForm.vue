@@ -107,7 +107,7 @@
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
-  const { notification, createErrorModal } = useMessage();
+  const { notification } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
 
@@ -137,7 +137,7 @@
       const userInfo = await userStore.login({
         password: data.password,
         account: data.account,
-        mode: 'none', //不要默认的错误提示
+        mode: 'message',
       });
       if (userInfo) {
         notification.success({
@@ -146,12 +146,6 @@
           duration: 3,
         });
       }
-    } catch (error) {
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
-        getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-      });
     } finally {
       loading.value = false;
     }

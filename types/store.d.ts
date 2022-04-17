@@ -50,7 +50,7 @@ export interface UserInfo {
   // 生日
   birthday: string;
   // 性别(字典 1男 2女 3未知)
-  sex: string;
+  gender: string;
   // 邮箱
   email: string;
   // 手机

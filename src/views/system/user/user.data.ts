@@ -1,47 +1,62 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { formatToDateTime } from '/@/utils/dateUtil';
 
 export const columns: BasicColumn[] = [
+  {
+    title: '头像',
+    dataIndex: 'avatar',
+    align: 'left',
+    width: 50,
+    slots: { customRender: 'Avatar' },
+  },
   {
     title: '用户名称',
     dataIndex: 'nickName',
     align: 'left',
-    width: 200,
+    width: 120,
   },
   {
     title: '登录账号',
     dataIndex: 'account',
     align: 'left',
-    width: 200,
+    width: 120,
+  },
+  {
+    title: '电话',
+    dataIndex: 'phone',
+    align: 'left',
+    width: 80,
+  },
+  {
+    title: '邮箱',
+    dataIndex: 'email',
+    align: 'left',
+    width: 120,
   },
   {
     title: '性别',
-    dataIndex: 'sex',
+    dataIndex: 'gender',
     align: 'left',
-    width: 50,
-    dictType: 'sex',
+    width: 40,
+    dictType: 'gender_type',
   },
   {
-    title: '注册时间',
-    dataIndex: 'updateTime',
-    width: 110,
-    format: (record) => {
-      return !record ? '--' : formatToDateTime(record, 'YYYY-MM-DD HH:mm');
-    },
+    title: '最后登陆时间',
+    dataIndex: 'lastLoginTime',
+    align: 'left',
+    width: 120,
   },
   {
     title: '更新时间',
     dataIndex: 'updateTime',
-    width: 110,
-    format: (record) => {
-      return !record ? '--' : formatToDateTime(record, 'YYYY-MM-DD HH:mm');
-    },
+    width: 120,
+    align: 'left',
   },
   {
     title: '状态',
     dataIndex: 'status',
-    width: 80,
+    width: 40,
+    align: 'left',
     dictType: 'common_status',
   },
 ];
@@ -89,11 +104,11 @@ export const formSchema: FormSchema[] = [
     component: 'DatePicker',
   },
   {
-    field: 'sex',
+    field: 'gender',
     label: '性别',
     component: 'Select',
     componentProps: {
-      dictType: 'sex',
+      dictType: 'gender_type',
     },
   },
   {

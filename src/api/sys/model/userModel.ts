@@ -43,7 +43,7 @@ export interface SysUser {
   realName: string;
   avatar: string;
   birthday: string;
-  sex: number;
+  gender: string;
   email: string;
   phone: string;
   telephone: string;

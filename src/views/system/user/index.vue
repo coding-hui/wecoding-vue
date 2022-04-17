@@ -4,6 +4,9 @@
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 新增用户 </a-button>
       </template>
+      <template #Avatar="{ record }">
+        <img class="user-avatar" :src="record.avatar" @click="handlePreviewAvatar(record.avatar)" />
+      </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
@@ -39,12 +42,13 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
 
+  import { createImgPreview } from '/@/components/Preview/index';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { findUserList, removeUser } from '/@/api/sys/user';
 
   import { useModal } from '/@/components/Modal';
-  import UserModal from './UserModal.vue';
-  import GrantRoleModal from './GrantRoleModal.vue';
+  import UserModal from './userModal.vue';
+  import GrantRoleModal from './grantRoleModal.vue';
 
   import { columns, searchFormSchema } from './user.data';
 
@@ -73,7 +77,7 @@
         showIndexColumn: true,
         canResize: false,
         actionColumn: {
-          width: 120,
+          width: 100,
           title: '操作',
           dataIndex: 'action',
           slots: { customRender: 'action' },
@@ -110,6 +114,10 @@
         reload();
       }
 
+      function handlePreviewAvatar(avatar: string) {
+        createImgPreview({ imageList: [avatar] });
+      }
+
       function onFetchSuccess() {
         // 演示默认展开所有表项
       }
@@ -122,9 +130,18 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        handlePreviewAvatar,
         onFetchSuccess,
         handleGrantRole,
       };
     },
   });
 </script>
+
+<style scoped lang="less">
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+</style>
