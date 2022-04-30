@@ -18,7 +18,7 @@ export interface RoleInfo {
  * @description: Login interface return value
  */
 export interface LoginResultModel {
-  access_token: string;
+  accessToken: string;
   refresh_token: string;
   token_type: string;
   expires_in: string;

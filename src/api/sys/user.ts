@@ -13,8 +13,8 @@ import { ErrorMessageMode } from '/#/axios';
 const RootPath = '/sys/user';
 
 enum Api {
-  Login = '/auth/oauth/token',
-  Logout = '/auth/open/logout',
+  Login = '/auth/token',
+  Logout = '/auth/logout',
   GetUserInfo = '/sys/user/login-info',
   GetPermCode = '/sys/menu/permissions',
 }
@@ -26,10 +26,10 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
   return defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
-      params: {
-        username: params.account,
+      data: {
+        account: params.account,
         password: params.password,
-        grant_type: 'password',
+        grantType: 'password',
         scope: 'all',
       },
     },

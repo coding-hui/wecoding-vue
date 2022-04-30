@@ -2,14 +2,21 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增 </a-button>
+        <a-popconfirm
+          title="是否要清空日志?"
+          ok-text="确定"
+          cancel-text="我再想想"
+          @confirm="handleClean"
+        >
+          <a-button type="danger"> 清空日志 </a-button>
+        </a-popconfirm>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
-              icon: 'clarity:note-edit-line',
-              tooltip: '编辑',
+              icon: 'ant-design:eye',
+              tooltip: '查看',
               onClick: handleEdit.bind(null, record),
             },
             {
@@ -17,6 +24,7 @@
               icon: 'ant-design:delete-outlined',
               tooltip: '删除',
               color: 'error',
+              ifShow: record.logoutTime !== null,
               popConfirm: {
                 placement: 'left',
                 title: '是否删除',
@@ -36,7 +44,7 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useModal } from '/@/components/Modal';
 
-  import { findLogList, removeLog } from '/@/api/sys/loginLog';
+  import { findLogList, removeLog, cleanLog } from '/@/api/sys/loginLog';
 
   import Modal from './modal.vue';
   import { columns, searchFormSchema } from './index.data';
@@ -87,6 +95,12 @@
         });
       }
 
+      function handleClean() {
+        cleanLog().then(() => {
+          reload();
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
@@ -97,6 +111,7 @@
         handleCreate,
         handleEdit,
         handleDelete,
+        handleClean,
         handleSuccess,
       };
     },

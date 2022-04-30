@@ -1,7 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import { Log, LogPageParam, getLogListResultModel } from './model/loginLogModel';
 
-const RootPath = '/sys/loginLog';
+const RootPath = '/sys/login-log';
 
 export const findLogList = (params: LogPageParam) => {
   return defHttp.get<getLogListResultModel>({ url: `${RootPath}/page`, params: params });
@@ -26,3 +26,7 @@ export const saveOrUpdateLog = (data: Log, isUpdate: boolean) => {
 export function removeLog(id: string) {
   return defHttp.delete({ url: `${RootPath}/${id}` }, { successMessageMode: 'success' });
 }
+
+export const cleanLog = () => {
+  return defHttp.delete({ url: `${RootPath}/clean` }, { successMessageMode: 'success' });
+};

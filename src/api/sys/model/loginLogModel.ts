@@ -4,6 +4,7 @@ export interface Log {
   id: string;
   account: string;
   userId: string;
+  clientId: string;
   ipaddr: string;
   loginLocation: string;
   browser: string;

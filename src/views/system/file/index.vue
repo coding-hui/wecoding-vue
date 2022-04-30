@@ -43,7 +43,7 @@
   import { useDrawer } from '/@/components/Drawer';
   import { createImgPreview } from '/@/components/Preview/index';
 
-  import { findFileList, removeFile, downloadFile } from '/@/api/sys/file';
+  import { findFileList, removeFile, downloadFile } from '/@/api/storage/file';
 
   import FileDrawer from './fileDrawer.vue';
   import { columns, searchFormSchema } from './file.data';

@@ -147,7 +147,7 @@ const transform: AxiosTransform = {
     const { clientId, clientSecret } = globSetting;
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
-      (config as Recordable).headers.Authorization = options.authenticationScheme
+      (config as Recordable).headers['WeCoding-Auth'] = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
     } else {

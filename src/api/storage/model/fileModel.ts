@@ -37,6 +37,16 @@ export interface FileParams {
   bizType?: string;
 }
 
+export interface UploadApiResult {
+  errorCode: number;
+  errorMessage: string;
+  success: boolean;
+  result: {
+    filename: string;
+    url: string;
+  };
+}
+
 export type getFileListResultModel = PageResult<File>;
 
 export type FilePageParam = FileParams & BasicPageParams;

@@ -16,7 +16,7 @@
   import { BasicForm, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
-  import { getFileById, saveOrUpdateFile } from '/@/api/sys/file';
+  import { getFileById, saveOrUpdateFile } from '/@/api/storage/file';
 
   import { formSchema } from './file.data';
 

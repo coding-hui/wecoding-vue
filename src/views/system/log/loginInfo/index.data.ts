@@ -6,56 +6,68 @@ export const columns: BasicColumn[] = [
     title: '登录账号',
     dataIndex: 'account',
     align: 'left',
+    width: 100,
   },
   {
-    title: '用户id',
-    dataIndex: 'userId',
+    title: '客户端',
+    dataIndex: 'clientId',
     align: 'left',
+    width: 100,
   },
   {
-    title: '登录IP地址',
+    title: 'IP',
     dataIndex: 'ipaddr',
     align: 'left',
+    width: 100,
   },
   {
-    title: '登录地点',
-    dataIndex: 'loginLocation',
-    align: 'left',
-  },
-  {
-    title: '浏览器类型',
+    title: '浏览器',
     dataIndex: 'browser',
     align: 'left',
+    width: 80,
   },
   {
     title: '操作系统',
     dataIndex: 'os',
     align: 'left',
+    width: 80,
   },
   {
-    title: '登录状态（0登录失败 1登录成功 2登出）',
-    dataIndex: 'status',
+    title: '登录地点',
+    dataIndex: 'loginLocation',
     align: 'left',
+    width: 100,
   },
   {
     title: '提示消息',
     dataIndex: 'msg',
     align: 'left',
+    width: 150,
   },
   {
     title: '登录时间',
     dataIndex: 'loginTime',
     align: 'left',
+    width: 150,
   },
   {
     title: '登出时间',
     dataIndex: 'logoutTime',
     align: 'left',
+    width: 150,
   },
   {
-    title: '用户登录时保存token的uuid',
+    title: 'token',
     dataIndex: 'loginUuid',
     align: 'left',
+    width: 150,
+  },
+  {
+    title: '登录状态',
+    dataIndex: 'status',
+    align: 'left',
+    dictType: 'vis_log_type',
+    width: 80,
   },
 ];
 
@@ -66,9 +78,12 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    label: '登录状态（0登录失败 1登录成功 2登出）',
+    label: '登录状态',
     field: 'status',
-    component: 'RadioGroup',
+    component: 'Select',
+    componentProps: {
+      dictType: 'vis_log_type',
+    },
   },
 ];
 
