@@ -41,7 +41,7 @@
 
   import { findMessageList, removeMessage } from '/@/api/message/message';
 
-  import MessageModal from './messageModal.vue';
+  import MessageModal from './MessageModal.vue';
   import { columns, searchFormSchema } from './message.data';
 
   export default defineComponent({

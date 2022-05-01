@@ -45,7 +45,7 @@
 
   import { findFileList, removeFile, downloadFile } from '/@/api/storage/file';
 
-  import FileDrawer from './fileDrawer.vue';
+  import FileDrawer from './FileDrawer.vue';
   import { columns, searchFormSchema } from './file.data';
   import { downloadByData } from '/@/utils/file/download';
 

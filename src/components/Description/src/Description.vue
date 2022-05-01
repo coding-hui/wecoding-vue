@@ -1,16 +1,19 @@
 <script lang="tsx">
   import type { DescriptionProps, DescInstance, DescItem } from './typing';
-  import type { DescriptionsProps } from 'ant-design-vue/es/descriptions/index';
+  import type { DescriptionsProps } from 'ant-design-vue/es';
   import type { CSSProperties } from 'vue';
-  import type { CollapseContainerOptions } from '/@/components/Container/index';
+  import type { CollapseContainerOptions } from '/@/components/Container';
   import { defineComponent, computed, ref, unref } from 'vue';
   import { get } from 'lodash-es';
   import { Descriptions } from 'ant-design-vue';
-  import { CollapseContainer } from '/@/components/Container/index';
+  import { CollapseContainer } from '/@/components/Container';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { isFunction } from '/@/utils/is';
+  import { isEmpty, isFunction, isNullOrUnDef } from '/@/utils/is';
   import { getSlot } from '/@/utils/helper/tsxHelper';
   import { useAttrs } from '/@/hooks/core/useAttrs';
+  import { useDict } from '/@/components/Dict';
+  import { propTypes } from '/@/utils/propTypes';
+  import { DictLabel } from '/@/components/Dict';
 
   const props = {
     useCollapse: { type: Boolean, default: true },
@@ -36,6 +39,7 @@
       default: () => [],
     },
     data: { type: Object },
+    dictTypes: propTypes.arrayOf(propTypes.string),
   };
 
   export default defineComponent({
@@ -63,6 +67,11 @@
         };
         return opt as DescriptionProps;
       });
+
+      if (!isEmpty(props.dictTypes)) {
+        const { initDict } = useDict();
+        initDict(props.dictTypes);
+      }
 
       /**
        * @description: Whether to setting title
@@ -109,7 +118,7 @@
         const { schema, data } = unref(getProps);
         return unref(schema)
           .map((item) => {
-            const { render, field, span, show, contentMinWidth } = item;
+            const { render, field, span, show, contentMinWidth, dictType } = item;
 
             if (show && isFunction(show) && !show(data)) {
               return null;
@@ -129,12 +138,20 @@
               <Descriptions.Item label={renderLabel(item)} key={field} span={span}>
                 {() => {
                   if (!contentMinWidth) {
-                    return getContent();
+                    if (isNullOrUnDef(dictType)) {
+                      return getContent();
+                    } else {
+                      return <DictLabel dictType={dictType} dictValue={getContent()} />;
+                    }
                   }
                   const style: CSSProperties = {
                     minWidth: `${width}px`,
                   };
-                  return <div style={style}>{getContent()}</div>;
+                  if (isNullOrUnDef(dictType)) {
+                    return <div style={style}>{getContent()}</div>;
+                  } else {
+                    return <DictLabel style={style} dictType={dictType} dictValue={getContent()} />;
+                  }
                 }}
               </Descriptions.Item>
             );

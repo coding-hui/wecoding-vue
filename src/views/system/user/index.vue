@@ -47,8 +47,8 @@
   import { findUserList, removeUser } from '/@/api/sys/user';
 
   import { useModal } from '/@/components/Modal';
-  import UserModal from './userModal.vue';
-  import GrantRoleModal from './grantRoleModal.vue';
+  import UserModal from './UserModal.vue';
+  import GrantRoleModal from './GrantRoleModal.vue';
 
   import { columns, searchFormSchema } from './user.data';
 

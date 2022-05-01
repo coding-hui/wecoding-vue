@@ -4,6 +4,7 @@
       :value="getValue"
       @change="handleValueChange"
       :mode="mode"
+      :lineNumbers="lineNumbers"
       :readonly="readonly"
     />
   </div>
@@ -18,13 +19,16 @@
     value: { type: [Object, String] as PropType<Record<string, any> | string> },
     mode: {
       type: String as PropType<MODE>,
+      // eslint-disable-next-line vue/valid-define-props
       default: MODE.JSON,
       validator(value: any) {
         // 这个值必须匹配下列字符串中的一个
+        // eslint-disable-next-line vue/valid-define-props
         return Object.values(MODE).includes(value);
       },
     },
     readonly: { type: Boolean },
+    lineNumbers: { type: Boolean },
     autoFormat: { type: Boolean, default: true },
   });
 

@@ -67,6 +67,7 @@ const transform: AxiosTransform = {
       case ResultEnum.TIMEOUT:
       case ResultEnum.TOKEN_ERROR:
       case ResultEnum.LOGIN_EXPIRED:
+      case ResultEnum.PARSE_TOKEN_ERROR:
         timeoutMsg = t('sys.api.timeoutMessage');
         const userStore = useUserStoreWithOut();
         userStore.setToken(undefined);

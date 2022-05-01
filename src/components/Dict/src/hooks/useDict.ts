@@ -39,9 +39,10 @@ export function useDict() {
    */
   function getDictLabel(dictType: string, value?: string, defaultValue = '未知'): string {
     const result: string[] = [];
+
     for (const item of getDictList(dictType)) {
       if (item && (',' + value + ',').includes(',' + item.value + ',')) {
-        result.push(item.name);
+        result.push(item.label);
       }
     }
     return result.length > 0 ? result.join(',') : defaultValue;

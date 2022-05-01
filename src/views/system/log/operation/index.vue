@@ -47,7 +47,7 @@
   import { columns, searchFormSchema } from './log.data';
 
   export default defineComponent({
-    name: 'OperLogManagement',
+    name: 'OpLog',
     components: { BasicTable, LogModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();

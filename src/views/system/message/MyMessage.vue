@@ -32,7 +32,7 @@
 
   import { findUserMessageList, readMessage } from '/@/api/message/message';
 
-  import MessagePreviewModal from './messagePreviewModal.vue';
+  import MessagePreviewModal from './MessagePreviewModal.vue';
   import { searchFormSchema, userMessageColumns } from './message.data';
 
   export default defineComponent({

@@ -15,7 +15,7 @@ export const DICT_DATA_ROUTE: AppRouteModule = {
     {
       path: ':type',
       name: 'DictDataList',
-      component: () => import('/@/views/system/dict/dictData.vue'),
+      component: () => import('/@/views/system/dict/DictData.vue'),
       meta: {
         title: 'DictDataList',
         hideBreadcrumb: true,

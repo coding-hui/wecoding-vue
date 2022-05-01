@@ -37,6 +37,7 @@
     },
     value: { type: String, default: '' },
     readonly: { type: Boolean, default: false },
+    lineNumbers: { type: Boolean, default: false },
   });
 
   const emit = defineEmits(['change']);
@@ -99,7 +100,7 @@
       tabSize: 2,
       theme: 'material-palenight',
       lineWrapping: true,
-      lineNumbers: true,
+      lineNumbers: props.lineNumbers,
       ...addonOptions,
     });
     editor?.setValue(props.value);

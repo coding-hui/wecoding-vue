@@ -1,29 +1,31 @@
 <template>
   <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     cancelText="返回"
     :showOkBtn="false"
     showFooter
-    title="操作日志"
-    width="50%"
+    title="登录日志"
+    width="40%"
   >
     <Description @register="register" />
   </BasicModal>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
+
   import { Description, useDescription } from '/@/components/Description';
   import { BasicModal, useModalInner } from '/@/components/Modal';
+
   import { useDict } from '/@/components/Dict';
-  import { schema } from './log.data';
+  import { schema } from '/@/views/system/log/loginInfo/index.data';
 
   export default defineComponent({
-    name: 'LogPreviewModal',
+    name: 'Modal',
     components: { BasicModal, Description },
     emits: ['success', 'register'],
     setup(_) {
-      const { initDict, getDictLabel } = useDict();
+      const { initDict } = useDict();
 
       const [register, { setDescProps }] = useDescription({
         bordered: false,
@@ -33,17 +35,16 @@
           'font-weight': 700,
         },
         schema: schema,
-        dictTypes: ['op_run_status'],
+        dictTypes: ['vis_log_type'],
       });
 
-      const [registerDrawer, { setModalProps }] = useModalInner(async (data) => {
-        await initDict(['op_type']);
-        data.record.opType = getDictLabel('op_type', data.record.businessType);
+      const [registerModal, { setModalProps }] = useModalInner(async (data) => {
+        await initDict(['vis_log_type']);
         await setDescProps({ data: data.record });
         setModalProps({ confirmLoading: false });
       });
 
-      return { register, registerDrawer };
+      return { register, registerModal };
     },
   });
 </script>

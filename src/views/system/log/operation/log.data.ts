@@ -1,32 +1,13 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { DescItem } from '/@/components/Description';
+import { CodeEditor } from '/@/components/CodeEditor';
+import { h } from 'vue';
 
 export const columns: BasicColumn[] = [
   {
     title: '模块名称',
     dataIndex: 'title',
-    align: 'left',
-  },
-  {
-    title: 'IP',
-    dataIndex: 'ip',
-    align: 'left',
-  },
-  {
-    title: '浏览器',
-    dataIndex: 'userAgent',
-  },
-  {
-    title: 'URI',
-    dataIndex: 'requestUri',
-  },
-  {
-    title: '操作方式',
-    dataIndex: 'requestMethod',
-  },
-  {
-    title: '执行时间',
-    dataIndex: 'time',
   },
   {
     title: '业务类型',
@@ -34,14 +15,41 @@ export const columns: BasicColumn[] = [
     dictType: 'op_type',
   },
   {
-    title: '创建时间',
-    dataIndex: 'createTime',
+    title: 'IP',
+    dataIndex: 'ip',
+  },
+  {
+    title: '浏览器',
+    dataIndex: 'userAgent',
+  },
+  {
+    title: '请求路径',
+    dataIndex: 'requestUri',
+  },
+  {
+    title: '请求方式',
+    dataIndex: 'requestMethod',
+  },
+  {
+    title: '客户端',
+    dataIndex: 'serviceId',
+    width: 80,
+  },
+  {
+    title: '执行时间',
+    dataIndex: 'time',
+    width: 80,
   },
   {
     title: '状态',
     dataIndex: 'type',
     width: 80,
     dictType: 'op_run_status',
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    width: 150,
   },
 ];
 
@@ -63,78 +71,63 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const formSchema: FormSchema[] = [
+export const schema: DescItem[] = [
   {
-    label: '模块标题',
+    label: '操作模块',
     field: 'title',
-    component: 'Input',
+    render: (curVal, data) => {
+      return `${curVal} / ${data.opType} / ${data.time}ns`;
+    },
   },
   {
-    label: '结果类型（1:成功，0失败）',
-    field: 'type',
-    component: 'Select',
-  },
-  {
-    label: '方法名称',
-    field: 'method',
-    component: 'Input',
+    label: '请求地址',
+    field: 'requestUri',
   },
   {
     label: '请求方式',
     field: 'requestMethod',
-    component: 'Input',
   },
   {
-    label: '用户浏览器',
+    label: '浏览器',
     field: 'userAgent',
-    component: 'Input',
   },
   {
-    label: '操作类别',
-    field: 'operatorType',
-    component: 'Select',
+    label: '客户端',
+    field: 'serviceId',
   },
   {
-    label: '部门名称',
-    field: 'deptName',
-    component: 'Input',
-  },
-  {
-    label: '请求 URI',
-    field: 'requestUri',
-    component: 'Input',
-  },
-  {
-    label: '主机地址',
-    field: 'ip',
-    component: 'Input',
-  },
-  {
-    label: '操作地点',
-    field: 'location',
-    component: 'Input',
-  },
-  {
-    label: '执行时间',
-    field: 'time',
-    component: 'Input',
-  },
-  {
-    label: '业务操作类型',
-    field: 'businessType',
-    component: 'Select',
-    componentProps: {
-      dictType: 'op_type',
+    label: '登录信息',
+    field: 'createUser',
+    render: (curVal, data) => {
+      return `${curVal} / ${data.ip}`;
     },
+  },
+  {
+    label: '操作状态',
+    field: 'type',
+    dictType: 'op_run_status',
+  },
+  {
+    label: '操作时间',
+    field: 'createTime',
+  },
+  {
+    label: '方法名称',
+    field: 'method',
+    span: 2,
   },
   {
     label: '请求参数',
     field: 'params',
-    component: 'InputTextArea',
+    render: (curVal) => {
+      return h(CodeEditor, { value: curVal, readonly: true, lineNumbers: false });
+    },
   },
   {
-    label: '错误消息',
+    label: '返回消息',
     field: 'exception',
-    component: 'InputTextArea',
+    render: (curVal) => {
+      return h(CodeEditor, { value: curVal, readonly: true, lineNumbers: false });
+    },
   },
 ];

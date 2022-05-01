@@ -46,11 +46,11 @@
 
   import { findLogList, removeLog, cleanLog } from '/@/api/sys/loginLog';
 
-  import Modal from './modal.vue';
+  import Modal from './LoginInfoModal.vue';
   import { columns, searchFormSchema } from './index.data';
 
   export default defineComponent({
-    name: 'Log',
+    name: 'LoginLog',
     components: { BasicTable, TableAction, Modal },
     setup() {
       const [registerLogModal, { openModal: openLogModal }] = useModal();
@@ -72,6 +72,7 @@
           width: 120,
           title: '操作',
           dataIndex: 'action',
+          align: 'left',
           slots: { customRender: 'action' },
         },
       });

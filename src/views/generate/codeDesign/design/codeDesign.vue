@@ -212,7 +212,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { PageWrapper } from '/@/components/Page';
   import { columns, schemas } from './data';
-  import PreviewCodeModal from '../PreviewCodeModal.vue';
+  import PreviewCodeModal from '../previewCodeModal.vue';
 
   import { getGenTableById, syncDb, updateGenTable } from '/@/api/gen/table';
   import { findDictTypeOptions } from '/@/api/sys/dict';

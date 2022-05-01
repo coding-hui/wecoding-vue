@@ -39,7 +39,7 @@
   import { findMenuList, removeMenu } from '/@/api/sys/menu';
 
   import { useModal } from '/@/components/Modal';
-  import MenuModal from './menuModal.vue';
+  import MenuModal from './MenuModal.vue';
 
   import { columns, searchFormSchema, isButton } from './menu.data';
 
