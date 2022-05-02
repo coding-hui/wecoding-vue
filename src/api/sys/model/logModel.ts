@@ -19,8 +19,8 @@ export interface SysLog {
 }
 
 export interface SysLogParams {
-  name: string;
-  code: string;
+  title?: string;
+  businessType?: string;
 }
 
 export type getLogListResultModel = SysLog[];

@@ -6,6 +6,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { useUserStoreWithOut } from '/@/store/modules/user';
 import projectSetting from '/@/settings/projectSetting';
 import { SessionTimeoutProcessingEnum } from '/@/enums/appEnum';
+import { isEmpty } from '/@/utils/is';
 
 const { createMessage, createErrorModal } = useMessage();
 const error = createMessage.error!;
@@ -28,12 +29,14 @@ export function checkStatus(
     // Jump to the login page if not logged in, and carry the path of the current page
     // Return to the current page after successful login. This step needs to be operated on the login page.
     case 401:
-      userStore.setToken(undefined);
       errMessage = msg || t('sys.api.errMsg401');
-      if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
-        userStore.setSessionTimeout(true);
-      } else {
-        userStore.logout(true);
+      if (isEmpty(userStore.getToken)) {
+        userStore.setToken(undefined);
+        if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
+          userStore.setSessionTimeout(true);
+        } else {
+          userStore.logout(true);
+        }
       }
       break;
     case 403:

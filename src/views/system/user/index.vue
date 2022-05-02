@@ -2,7 +2,9 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增用户 </a-button>
+        <a-button v-auth="'system:user:save'" type="primary" @click="handleCreate">
+          新增用户
+        </a-button>
       </template>
       <template #Avatar="{ record }">
         <img class="user-avatar" :src="record.avatar" @click="handlePreviewAvatar(record.avatar)" />
@@ -14,17 +16,20 @@
               icon: 'clarity:note-edit-line',
               tooltip: '编辑',
               onClick: handleEdit.bind(null, record),
+              auth: 'system:user:update',
             },
             {
               icon: 'ant-design:security-scan-outlined',
               tooltip: '授权角色',
               onClick: handleGrantRole.bind(null, record),
+              auth: 'system:user:grant',
             },
             {
               divider: true,
               icon: 'ant-design:delete-outlined',
               tooltip: '删除用户',
               color: 'error',
+              auth: 'system:user:remove',
               popConfirm: {
                 placement: 'left',
                 title: '是否确认删除',

@@ -37,7 +37,7 @@ export const columns: BasicColumn[] = [
     title: '性别',
     dataIndex: 'gender',
     align: 'left',
-    width: 40,
+    width: 50,
     dictType: 'gender_type',
   },
   {
@@ -55,7 +55,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
-    width: 40,
+    width: 50,
     align: 'left',
     dictType: 'common_status',
   },
