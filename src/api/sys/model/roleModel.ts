@@ -16,6 +16,8 @@ export interface SysRole {
   redirect?: string;
   sort?: number;
   cached?: boolean;
+  menuCheckStrictly: boolean;
+  deptCheckStrictly: boolean;
 }
 
 export interface SysRoleParams {

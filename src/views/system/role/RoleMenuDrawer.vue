@@ -21,6 +21,7 @@
           :checkable="true"
           :default-expand-level="3"
           :default-expand-all="true"
+          :check-strictly="menuCheckStrictlyRef"
         />
       </template>
     </BasicForm>
@@ -45,6 +46,7 @@
       const treeRef = ref<Nullable<TreeActionType>>(null);
       const menuTreeData = ref<RouteItem[]>([]);
       const checkedKeys = ref([]);
+      const menuCheckStrictlyRef = ref<boolean>(false);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         schemas: roleMenuFormSchema,
@@ -53,9 +55,10 @@
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
         await resetFields();
-        const { roleId, name } = data.record;
-        await setFieldsValue({ roleId, name });
+        const { roleId, name, menuCheckStrictly } = data.record;
+        await setFieldsValue({ roleId, name, menuCheckStrictly });
 
+        menuCheckStrictlyRef.value = menuCheckStrictly;
         menuTreeData.value = await findMenuSelect();
         checkedKeys.value = await getOwnMenuIds(roleId);
 
@@ -75,8 +78,9 @@
         try {
           const values = await validate();
           let keys = getTree().getCheckedKeys();
+          console.log(menuCheckStrictlyRef.value, 'v');
           if (Reflect.has(keys, 'checked')) {
-            values.grantMenuIdList = keys.checked;
+            values.grantMenuIdList = keys['checked'];
           } else {
             values.grantMenuIdList = getTree().getCheckedKeys();
           }
@@ -93,7 +97,15 @@
         }
       }
 
-      return { registerDrawer, registerForm, handleSubmit, treeRef, menuTreeData, checkedKeys };
+      return {
+        registerDrawer,
+        registerForm,
+        handleSubmit,
+        treeRef,
+        menuTreeData,
+        checkedKeys,
+        menuCheckStrictlyRef,
+      };
     },
   });
 </script>

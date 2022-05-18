@@ -101,6 +101,12 @@ export const roleMenuFormSchema: FormSchema[] = [
     show: false,
   },
   {
+    field: 'menuCheckStrictly',
+    label: '是否关联显示',
+    component: 'Input',
+    show: false,
+  },
+  {
     field: 'name',
     label: '角色名称',
     component: 'Input',
@@ -118,6 +124,12 @@ export const roleDeptFormSchema: FormSchema[] = [
   {
     label: '',
     field: 'roleId',
+    component: 'Input',
+    show: false,
+  },
+  {
+    field: 'deptCheckStrictly',
+    label: '是否关联显示',
     component: 'Input',
     show: false,
   },
