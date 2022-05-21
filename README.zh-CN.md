@@ -1,4 +1,4 @@
-<div align="center"> <a href="https://github.com/anncwb/vue-wecoding-admin"> <img alt="VbenAdmin Logo" width="200" height="200" src="https://anncwb.github.io/anncwb/images/logo.png"> </a> <br> <br>
+<div align="center"> <a href="https://github.com/anncwb/vue-wecoding-admin"> <img alt="WeCoding Logo" width="200" height="200" src="https://anncwb.github.io/anncwb/images/logo.png"> </a> <br> <br>
 
 [![license](https://img.shields.io/github/license/anncwb/vue-wecoding-admin.svg)](LICENSE)
 
@@ -23,10 +23,7 @@ Vue WeCoding 是一个免费开源的中后台模版。使用了最新的`vue3`,
 
 ## 预览
 
-- [vue-wecoding-admin](https://vvbin.cn/next/) - 完整版中文站点
-- [vue-wecoding-admin-gh-pages](https://anncwb.github.io/vue-wecoding-admin/) - 完整版 github 站点
-- [wecoding-admin-thin-next](https://vvbin.cn/thin/next/) - 简化版中文站点
-- [wecoding-admin-thin-gh-pages](https://anncwb.github.io/wecoding-admin-thin-next/) - 简化版 github 站点
+- [wecoding-vue](https://wecoding.top) - 项目预览
 
 测试账号: wecoding/123456
 
@@ -35,16 +32,6 @@ Vue WeCoding 是一个免费开源的中后台模版。使用了最新的`vue3`,
     <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview2.png">
     <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview3.png">
 </p>
-
-### 使用 Gitpod
-
-在 Gitpod（适用于 GitHub 的免费在线开发环境）中打开项目，并立即开始编码.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/anncwb/vue-wecoding-admin)
-
-## 文档
-
-[文档地址](https://vvbin.cn/doc-next/)
 
 ## 准备
 
@@ -62,13 +49,13 @@ Vue WeCoding 是一个免费开源的中后台模版。使用了最新的`vue3`,
 - 获取项目代码
 
 ```bash
-git clone https://github.com/anncwb/vue-wecoding-admin.git
+git clone https://gitee.com/coder-hui/wecoding-vue.git
 ```
 
 - 安装依赖
 
 ```bash
-cd vue-wecoding-admin
+cd wecoding-vue
 
 pnpm install
 
@@ -92,12 +79,13 @@ pnpm build
 
 ## 项目地址
 
-- [vue-wecoding-admin](https://github.com/anncwb/vue-wecoding-admin) - 完整版
-- [vue-wecoding-admin-thin-next](https://github.com/anncwb/wecoding-admin-thin-next) - 简化版
+- [wecoding](https://gitee.com/coder-hui/wecoding.git) - 单体版后台
+- [wecoding-cloud](https://gitee.com/coder-hui/wecoding-cloud.git) - 微服务版后台
+- [wecoding-vue](https://gitee.com/coder-hui/wecoding-vue.git) - 项目前台
 
 ## 如何贡献
 
-非常欢迎你的加入！[提一个 Issue](https://github.com/anncwb/vue-wecoding-admin/issues/new/choose) 或者提交一个 Pull Request。
+非常欢迎你的加入！[提一个 Issue](https://gitee.com/coder-hui/wecoding-vue/issues) 或者提交一个 Pull Request。
 
 **Pull Request:**
 
@@ -131,45 +119,8 @@ pnpm build
 
 支持现代浏览器, 不支持 IE
 
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :-: | :-: | :-: | :-: | :-: |
-| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+## Browsers support
 
-## 相关仓库
-
-如果这些插件对你有帮助，可以给一个 star 支持下
-
-- [vite-plugin-mock](https://github.com/anncwb/vite-plugin-mock) - 用于本地及开发环境数据 mock
-- [vite-plugin-html](https://github.com/anncwb/vite-plugin-html) - 用于 html 模版转换及压缩
-- [vite-plugin-style-import](https://github.com/anncwb/vite-plugin-style-import) - 用于组件库样式按需引入
-- [vite-plugin-theme](https://github.com/anncwb/vite-plugin-theme) - 用于在线切换主题色等颜色相关配置
-- [vite-plugin-imagemin](https://github.com/anncwb/vite-plugin-imagemin) - 用于打包压缩图片资源
-- [vite-plugin-compression](https://github.com/anncwb/vite-plugin-compression) - 用于打包输出.gz|.brotil 文件
-- [vite-plugin-svg-icons](https://github.com/anncwb/vite-plugin-svg-icons) - 用于快速生成 svg 雪碧图
-
-## 后台整合示例
-
-- [lamp-cloud](https://github.com/zuihou/lamp-cloud) - 基于 SpringCloud Alibaba 的微服务中后台快速开发平台
-- [matecloud](https://github.com/matevip/matecloud) - MateCloud 微服务脚手架，基于 Spring Cloud 2020.0.3、SpringBoot 2.5.3 的全开源平台
-
-## 维护者
-
-[@Vben](https://github.com/anncwb)
-
-## 捐赠
-
-如果你觉得这个项目对你有帮助，你可以帮作者买一杯咖啡表示支持!
-
-![donate](https://anncwb.github.io/anncwb/images/sponsor.png)
-
-<a style="display: block;width: 100px;height: 50px;line-height: 50px; color: #fff;text-align: center; background: #408aed;border-radius: 4px;" href="https://www.paypal.com/paypalme/cvwecoding">Paypal Me</a>
-
-## 交流
-
-`Vue-wecoding-Admin` 是完全开源免费的项目，在帮助开发者更方便地进行中大型管理系统开发，同时也提供 QQ 交流群使用问题欢迎在群内提问。
-
-- QQ 群 `569291866`
-
-## License
-
-[MIT © Vben-2020](./LICENSE)
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>iOS Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Samsung | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Opera |
+| --- | --- | --- | --- | --- | --- | --- |
+| IE11, Edge | last 2 versions | last 2 versions | last 2 versions | last -1 versions | last 2 versions | last 2 versions |
