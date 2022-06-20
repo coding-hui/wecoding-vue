@@ -1,0 +1,22 @@
+export default {
+  table: {
+    title: '操作日志',
+  },
+  id: 'Id',
+  traceId: 'traceId',
+  type: '操作状态',
+  title: '模块名称',
+  ip: 'IP',
+  location: '操作地址',
+  userAgent: '浏览器',
+  requestUri: '请求路径',
+  requestMethod: '请求方式',
+  params: '请求参数',
+  time: '执行时间',
+  exception: '返回消息',
+  serviceId: '客户端',
+  method: '方法名称',
+  businessType: '业务类型',
+  createUser: '登录信息',
+  createTime: '创建时间',
+};
