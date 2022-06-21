@@ -35,7 +35,7 @@ export const tableColumns: BasicColumn[] = [
   {
     title: t('system.dictType.updateTime'),
     dataIndex: 'updateTime',
-    width: 120,
+    width: 150,
     align: 'left',
   },
 ];
