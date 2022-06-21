@@ -183,10 +183,12 @@
       });
 
       watchEffect(() => {
-        const columns = table.getColumns();
-        if (columns.length && !state.isInit) {
-          init();
-        }
+        setTimeout(() => {
+          const columns = table.getColumns();
+          if (columns.length && !state.isInit) {
+            init();
+          }
+        }, 0);
       });
 
       watchEffect(() => {
