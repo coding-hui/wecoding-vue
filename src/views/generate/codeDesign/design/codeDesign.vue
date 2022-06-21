@@ -215,7 +215,7 @@
   import PreviewCodeModal from '../PreviewCodeModal.vue';
 
   import { getGenTableById, syncDb, updateGenTable } from '/@/api/gen/table';
-  import { findDictTypeOptions } from '/@/api/sys/dict';
+  import { findDictTypeOptions } from '/@/api/system/dict';
   import { useLoading } from '/@/components/Loading';
   import { useModal } from '/@/components/Modal';
 

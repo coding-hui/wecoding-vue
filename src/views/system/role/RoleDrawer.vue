@@ -17,7 +17,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { getRoleById, saveOrUpdateRole } from '/@/api/sys/role';
+  import { getRoleById, saveOrUpdateRole } from '/@/api/system/role';
 
   export default defineComponent({
     name: 'RoleDrawer',

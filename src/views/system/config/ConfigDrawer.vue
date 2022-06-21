@@ -17,7 +17,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './config.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { getConfigById, saveOrUpdateConfig } from '/@/api/sys/config';
+  import { getConfigById, saveOrUpdateConfig } from '/@/api/system/config';
 
   export default defineComponent({
     name: 'ConfigDrawer',

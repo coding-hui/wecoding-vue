@@ -35,7 +35,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { findLogList, removeLog, cleanLog } from '/@/api/sys/operlog';
+  import { findLogList, removeLog, cleanLog } from '/@/api/system/operlog';
   import { useModal } from '/@/components/Modal';
   import LogModal from './logModal.vue';
   import { columns, searchFormSchema } from './log.data';

@@ -35,8 +35,8 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeActionType } from '/@/components/Tree';
-  import { findDeptTreeSelect } from '/@/api/sys/dept';
-  import { getOwnData, grantData } from '/@/api/sys/role';
+  import { findDeptTreeSelect } from '/@/api/system/dept';
+  import { getOwnData, grantData } from '/@/api/system/role';
 
   export default defineComponent({
     name: 'RoleDeptDrawer',

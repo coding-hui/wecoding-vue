@@ -52,7 +52,7 @@
   import { ActionEnum } from '/@/enums/commonEnum';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useDrawer } from '/@/components/Drawer';
-  import { findRoleList, removeRole } from '/@/api/sys/role';
+  import { findRoleList, removeRole } from '/@/api/system/role';
   import RoleDrawer from './RoleDrawer.vue';
   import RoleMenuDrawer from './RoleMenuDrawer.vue';
   import RoleDeptDrawer from './RoleDeptDrawer.vue';

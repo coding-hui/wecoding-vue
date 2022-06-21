@@ -1,7 +1,7 @@
 import { Ref } from 'vue';
 import { isEmpty } from '/@/utils/is';
 import { useUserStore } from '/@/store/modules/user';
-import { getDictDataByType } from '/@/api/sys/dict';
+import { getDictDataByType } from '/@/api/system/dict';
 const userStore = useUserStore();
 
 export function useDict() {

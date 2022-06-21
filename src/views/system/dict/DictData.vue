@@ -75,7 +75,7 @@
   import { Tag, Badge } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { findDictDataList, removeDictData } from '/@/api/sys/dict';
+  import { findDictDataList, removeDictData } from '/@/api/system/dict';
   import { useGo } from '/@/hooks/web/usePage';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDrawer } from '/@/components/Drawer';

@@ -17,7 +17,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './user.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { getUserById, saveOrUpdateUser } from '/@/api/sys/user';
+  import { getUserById, saveOrUpdateUser } from '/@/api/system/user';
 
   export default defineComponent({
     name: 'UserDrawer',

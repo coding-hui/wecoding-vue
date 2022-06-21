@@ -56,7 +56,7 @@
   import { ActionEnum } from '/@/enums/commonEnum';
   import { createImgPreview } from '/@/components/Preview/index';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { findUserList, removeUser } from '/@/api/sys/user';
+  import { findUserList, removeUser } from '/@/api/system/user';
   import { useModal } from '/@/components/Modal';
   import { useDrawer } from '/@/components/Drawer';
   import UserDrawer from './UserDrawer.vue';

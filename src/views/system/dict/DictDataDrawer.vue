@@ -71,7 +71,7 @@
   import { BasicForm, useForm } from '/@/components/Form';
   import { formSchema } from './dictData.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { getDictDataById, saveOrUpdateDictData } from '/@/api/sys/dict';
+  import { getDictDataById, saveOrUpdateDictData } from '/@/api/system/dict';
 
   export default defineComponent({
     name: 'DictDataDrawer',

@@ -16,8 +16,8 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicTable, useTable } from '/@/components/Table';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { grantRole, ownRole } from '/@/api/sys/user';
-  import { findRoleList } from '/@/api/sys/role';
+  import { grantRole, ownRole } from '/@/api/system/user';
+  import { findRoleList } from '/@/api/system/role';
 
   export default defineComponent({
     name: 'UserModal',

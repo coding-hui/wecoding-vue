@@ -35,7 +35,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { ActionEnum } from '/@/enums/commonEnum';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { findConfigList, removeConfig } from '/@/api/sys/config';
+  import { findConfigList, removeConfig } from '/@/api/system/config';
   import { useDrawer } from '/@/components/Drawer';
   import ConfigDrawer from './ConfigDrawer.vue';
   import { columns, searchFormSchema } from './config.data';

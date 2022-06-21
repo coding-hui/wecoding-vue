@@ -36,8 +36,8 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { roleMenuFormSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { getOwnMenuIds, grantMenu } from '/@/api/sys/role';
-  import { findMenuSelect } from '/@/api/sys/menu';
+  import { getOwnMenuIds, grantMenu } from '/@/api/system/role';
+  import { findMenuSelect } from '/@/api/system/menu';
 
   export default defineComponent({
     name: 'RoleMenuDrawer',

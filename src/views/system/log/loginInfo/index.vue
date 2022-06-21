@@ -37,7 +37,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useModal } from '/@/components/Modal';
-  import { findLogList, removeLog, cleanLog } from '/@/api/sys/loginLog';
+  import { findLogList, removeLog, cleanLog } from '/@/api/system/loginLog';
   import Modal from './loginInfoModal.vue';
   import { columns, searchFormSchema } from './index.data';
 

@@ -1,6 +1,6 @@
 import { FormSchema } from '/@/components/Form';
 
-import { findMenuSelect } from '/@/api/sys/menu';
+import { findMenuSelect } from '/@/api/system/menu';
 
 export const columns = [
   {

@@ -16,7 +16,7 @@
   import { ActionEnum } from '/@/enums/commonEnum';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { getDeptById, saveOrUpdateDept, findDeptTreeSelect } from '/@/api/sys/dept';
+  import { getDeptById, saveOrUpdateDept, findDeptTreeSelect } from '/@/api/system/dept';
   import { formSchema } from './dept.data';
 
   export default defineComponent({

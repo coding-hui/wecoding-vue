@@ -42,7 +42,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { ActionEnum } from '/@/enums/commonEnum';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { findDeptList, removeDept } from '/@/api/sys/dept';
+  import { findDeptList, removeDept } from '/@/api/system/dept';
   import { useDrawer } from '/@/components/Drawer';
   import DeptDrawer from './DeptDrawer.vue';
   import { columns, searchFormSchema } from './dept.data';

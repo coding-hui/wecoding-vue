@@ -53,7 +53,7 @@
   import { CopyTwoTone } from '@ant-design/icons-vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import DictTypeDrawer from './DictTypeDrawer.vue';
-  import { findDictTypeList, removeDictType } from '/@/api/sys/dict';
+  import { findDictTypeList, removeDictType } from '/@/api/system/dict';
   import { tableColumns, searchForm } from './dictType.data';
 
   export default defineComponent({

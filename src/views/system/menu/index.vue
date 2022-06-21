@@ -41,7 +41,7 @@
   import { ActionEnum } from '/@/enums/commonEnum';
   import { listToTree } from '/@/utils/helper/treeHelper';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { findMenuList, removeMenu } from '/@/api/sys/menu';
+  import { findMenuList, removeMenu } from '/@/api/system/menu';
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
   import { columns, searchFormSchema, isButton } from './menu.data';
