@@ -79,7 +79,7 @@
         }
         const component = unref(getComponent);
         const apiSelectProps: Recordable = {};
-        if (component === 'ApiSelect') {
+        if (component === 'Select') {
           apiSelectProps.cache = true;
         }
 
@@ -295,7 +295,7 @@
       function handleOptionsChange(options: LabelValueOptions) {
         const { replaceFields } = unref(getComponentProps);
         const component = unref(getComponent);
-        if (component === 'ApiTreeSelect') {
+        if (component === 'TreeSelect') {
           const { title = 'title', value = 'value', children = 'children' } = replaceFields || {};
           let listOptions: Recordable[] = treeToList(options, { children });
           listOptions = listOptions.map((item) => {
