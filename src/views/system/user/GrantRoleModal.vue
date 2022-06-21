@@ -55,15 +55,15 @@
         canResize: false,
       });
 
-      const [registerModal, { setDrawerProps, closeDrawer }] = useModalInner(async (data) => {
-        setDrawerProps({ loading: true });
+      const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+        setModalProps({ loading: true });
         const { userId, realName } = data.record;
         userIdRef.value = userId;
         title.value = realName + `【${t('common.title.grantRole')}】`;
         await reload();
         const res = await ownRole(userId);
         setSelectedRowKeys(res);
-        setDrawerProps({ loading: false });
+        setModalProps({ loading: false });
       });
 
       async function handleSubmit() {
@@ -73,16 +73,16 @@
             createMessage.warning(t('common.tips.leastSelectOneRecord'));
             return;
           }
-          setDrawerProps({ confirmLoading: true });
+          setModalProps({ confirmLoading: true });
 
           const roleIds = rows.map((item) => {
             return item.roleId;
           });
           await grantRole({ userId: unref(userIdRef), roleIds: roleIds });
-          setTimeout(closeDrawer);
+          setTimeout(closeModal);
           emit('success');
         } finally {
-          setDrawerProps({ confirmLoading: false });
+          setModalProps({ confirmLoading: false });
         }
       }
 
