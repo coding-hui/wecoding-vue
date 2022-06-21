@@ -14,36 +14,36 @@
             @click="handlePreviewAvatar(record.avatar)"
           />
         </template>
-      </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              icon: 'clarity:note-edit-line',
-              tooltip: t('common.title.edit'),
-              onClick: handleEdit.bind(null, record),
-              auth: 'system:user:update',
-            },
-            {
-              icon: 'ant-design:security-scan-outlined',
-              tooltip: t('common.title.grantRole'),
-              onClick: handleGrantRole.bind(null, record),
-              auth: 'system:user:grant',
-            },
-            {
-              divider: true,
-              icon: 'ant-design:delete-outlined',
-              tooltip: t('common.title.remove'),
-              color: 'error',
-              auth: 'system:user:remove',
-              popConfirm: {
-                placement: 'left',
-                title: `${t('common.tips.confirmRemove')}`,
-                confirm: handleDelete.bind(null, record),
+        <template v-else-if="column.dataIndex === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'clarity:note-edit-line',
+                tooltip: t('common.title.edit'),
+                onClick: handleEdit.bind(null, record),
+                auth: 'system:user:update',
               },
-            },
-          ]"
-        />
+              {
+                icon: 'ant-design:security-scan-outlined',
+                tooltip: t('common.title.grantRole'),
+                onClick: handleGrantRole.bind(null, record),
+                auth: 'system:user:grant',
+              },
+              {
+                divider: true,
+                icon: 'ant-design:delete-outlined',
+                tooltip: t('common.title.remove'),
+                color: 'error',
+                auth: 'system:user:remove',
+                popConfirm: {
+                  placement: 'left',
+                  title: `${t('common.tips.confirmRemove')}`,
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
     </BasicTable>
     <UserDrawer @register="registerDrawer" @success="handleSuccess" />
@@ -92,7 +92,6 @@
           width: 100,
           title: t('common.column.action'),
           dataIndex: 'action',
-          slots: { customRender: 'action' },
           fixed: 'right',
         },
       });
