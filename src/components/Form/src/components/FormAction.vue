@@ -86,7 +86,7 @@
       },
       actionSpan: propTypes.number.def(6),
       isAdvanced: propTypes.bool,
-      hideAdvanceBtn: propTypes.bool,
+      hideAdvanceBtn: propTypes.bool.def(true),
       baseColProps: {
         type: Object as PropType<Partial<ColEx>>,
       },
