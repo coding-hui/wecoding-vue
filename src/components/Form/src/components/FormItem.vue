@@ -251,7 +251,6 @@
 
         const on = {
           [eventKey]: (...args: Nullable<Recordable>[]) => {
-            // console.log('event', eventKey, ...args);
             const [e, labelValue] = args;
             if (propsData[eventKey]) {
               propsData[eventKey](...args);
