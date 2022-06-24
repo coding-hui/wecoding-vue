@@ -86,15 +86,6 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { span: 6 },
   },
-  {
-    field: 'gender',
-    label: t('system.user.gender'),
-    component: 'Select',
-    componentProps: {
-      dictType: DictEnum.GENDER_TYPE,
-    },
-    colProps: { span: 6 },
-  },
 ];
 
 export const formSchema: FormSchema[] = [

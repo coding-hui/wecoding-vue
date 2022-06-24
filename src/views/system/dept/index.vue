@@ -4,33 +4,35 @@
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> {{ t('common.title.add') }} </a-button>
       </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              icon: 'clarity:note-edit-line',
-              tooltip: t('common.title.edit'),
-              onClick: handleEdit.bind(null, record),
-            },
-            {
-              divider: true,
-              icon: 'ant-design:plus-outlined',
-              tooltip: t('common.title.addChild'),
-              onClick: handleCreateChild.bind(null, record),
-            },
-            {
-              divider: true,
-              icon: 'ant-design:delete-outlined',
-              tooltip: t('common.title.remove'),
-              color: 'error',
-              popConfirm: {
-                placement: 'left',
-                title: `${t('common.tips.confirmRemove')}`,
-                confirm: handleDelete.bind(null, record),
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'clarity:note-edit-line',
+                tooltip: t('common.title.edit'),
+                onClick: handleEdit.bind(null, record),
               },
-            },
-          ]"
-        />
+              {
+                divider: true,
+                icon: 'ant-design:plus-outlined',
+                tooltip: t('common.title.addChild'),
+                onClick: handleCreateChild.bind(null, record),
+              },
+              {
+                divider: true,
+                icon: 'ant-design:delete-outlined',
+                tooltip: t('common.title.remove'),
+                color: 'error',
+                popConfirm: {
+                  placement: 'left',
+                  title: `${t('common.tips.confirmRemove')}`,
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
     </BasicTable>
     <DeptDrawer @register="registerDrawer" @success="handleSuccess" />
@@ -76,7 +78,6 @@
           width: 80,
           title: t('common.column.action'),
           dataIndex: 'action',
-          slots: { customRender: 'action' },
           fixed: 'right',
         },
       });

@@ -6,12 +6,12 @@
         <a-button type="primary" @click="handleCreate"> {{ t('common.title.add') }} </a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'dictCode'">
+        <template v-if="column.key === 'dictCode'">
           <a @click="handleEdit(record)" :title="record.dictCode">
             {{ record.label }}
           </a>
         </template>
-        <template v-else-if="column.dataIndex === 'listClass'">
+        <template v-else-if="column.key === 'listClass'">
           <template v-if="record.listClass?.startsWith('tag ')">
             <Tag :color="record.listClass?.substring(4)" :title="record.label">
               <Icon v-if="record.icon && record.icon != ''" :icon="record.icon" class="pr-1" />
@@ -43,7 +43,7 @@
             </span>
           </template>
         </template>
-        <template v-else-if="column.dataIndex === 'action'">
+        <template v-else-if="column.key === 'action'">
           <TableAction
             :actions="[
               {

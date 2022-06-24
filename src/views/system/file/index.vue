@@ -4,33 +4,35 @@
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> {{ t('common.title.upload') }} </a-button>
       </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              icon: 'ant-design:zoom-in-outlined',
-              tooltip: t('common.title.preview'),
-              onClick: handlePreviewFile.bind(null, record),
-              ifShow: isPic.bind(null, record),
-            },
-            {
-              icon: 'ant-design:download-outlined',
-              tooltip: t('common.title.download'),
-              onClick: handleDownloadFile.bind(null, record),
-            },
-            {
-              divider: true,
-              icon: 'ant-design:delete-outlined',
-              tooltip: t('common.title.remove'),
-              color: 'error',
-              popConfirm: {
-                placement: 'left',
-                title: `${t('common.tips.confirmRemove')}`,
-                confirm: handleDelete.bind(null, record),
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'ant-design:zoom-in-outlined',
+                tooltip: t('common.title.preview'),
+                onClick: handlePreviewFile.bind(null, record),
+                ifShow: isPic.bind(null, record),
               },
-            },
-          ]"
-        />
+              {
+                icon: 'ant-design:download-outlined',
+                tooltip: t('common.title.download'),
+                onClick: handleDownloadFile.bind(null, record),
+              },
+              {
+                divider: true,
+                icon: 'ant-design:delete-outlined',
+                tooltip: t('common.title.remove'),
+                color: 'error',
+                popConfirm: {
+                  placement: 'left',
+                  title: `${t('common.tips.confirmRemove')}`,
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
     </BasicTable>
     <FileDrawer @register="registerFileDrawer" @success="handleSuccess" />
@@ -74,7 +76,6 @@
           title: t('common.column.action'),
           fixed: 'right',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
         },
       });
 

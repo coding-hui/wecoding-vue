@@ -25,11 +25,12 @@
       <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
-      <template #dictLabelColumn="{ column, record }">
-        <DictLabel :dictType="column.dictType" :dictValue="record[column.dataIndex]" />
-      </template>
       <template #headerCell="{ column }">
         <HeaderCell :column="column" />
+      </template>
+      <!-- 增加对antdv3.x兼容 -->
+      <template #bodyCell="data">
+        <slot name="bodyCell" v-bind="data || {}"></slot>
       </template>
       <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
       <!--        <HeaderCell :column="column" />-->
@@ -51,7 +52,6 @@
   import { PageWrapperFixedHeightKey } from '/@/components/Page';
   import HeaderCell from './components/HeaderCell.vue';
   import { InnerHandlers } from './types/table';
-  import { DictLabel } from '/@/components/Dict';
 
   import { usePagination } from './hooks/usePagination';
   import { useColumns } from './hooks/useColumns';
@@ -79,7 +79,6 @@
       Table,
       BasicForm,
       HeaderCell,
-      DictLabel,
     },
     props: basicProps,
     emits: [

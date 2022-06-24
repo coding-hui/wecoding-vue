@@ -3,6 +3,7 @@ import type { PaginationProps } from '../types/pagination';
 import type { ComputedRef } from 'vue';
 import { computed, Ref, ref, toRaw, unref, watch } from 'vue';
 import { renderEditCell } from '../components/editable';
+import { renderDictLabelCell } from '../components/dict';
 import { usePermission } from '/@/hooks/web/usePermission';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { isArray, isBoolean, isFunction, isMap, isString } from '/@/utils/is';
@@ -28,12 +29,6 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
   }
   if (item.dictType) {
     dictTypes.add(item.dictType);
-    if (!item.slots?.customRender) {
-      if (!item.slots) {
-        item.slots = {};
-      }
-      item.slots.customRender = 'dictLabelColumn';
-    }
   }
 }
 
@@ -175,7 +170,7 @@ export function useColumns(
         return hasPermission(column.auth) && isIfShow(column);
       })
       .map((column) => {
-        const { slots, customRender, format, edit, editRow, flag } = column;
+        const { slots, customRender, format, edit, editRow, flag, dictType } = column;
 
         if (!slots || !slots?.title) {
           // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
@@ -192,6 +187,8 @@ export function useColumns(
         // edit table
         if ((edit || editRow) && !isDefaultAction) {
           column.customRender = renderEditCell(column);
+        } else if (dictType) {
+          column.customRender = renderDictLabelCell(column);
         }
         return column;
       });

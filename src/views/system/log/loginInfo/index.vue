@@ -4,28 +4,30 @@
       <template #toolbar>
         <a-button type="danger" @click="handleClean"> {{ t('common.title.clean') }} </a-button>
       </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              tooltip: t('common.title.view'),
-              icon: 'ant-design:eye',
-              onClick: handleEdit.bind(null, record),
-            },
-            {
-              divider: true,
-              icon: 'ant-design:delete-outlined',
-              tooltip: t('common.title.remove'),
-              color: 'error',
-              ifShow: record.logoutTime !== null,
-              popConfirm: {
-                placement: 'left',
-                title: `${t('common.tips.confirmRemove')}`,
-                confirm: handleDelete.bind(null, record),
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                tooltip: t('common.title.view'),
+                icon: 'ant-design:eye',
+                onClick: handleEdit.bind(null, record),
               },
-            },
-          ]"
-        />
+              {
+                divider: true,
+                icon: 'ant-design:delete-outlined',
+                tooltip: t('common.title.remove'),
+                color: 'error',
+                ifShow: record.logoutTime !== null,
+                popConfirm: {
+                  placement: 'left',
+                  title: `${t('common.tips.confirmRemove')}`,
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
     </BasicTable>
     <Modal @register="registerLogModal" @success="handleSuccess" />
@@ -67,7 +69,6 @@
           title: t('common.column.action'),
           dataIndex: 'action',
           align: 'left',
-          slots: { customRender: 'action' },
         },
       });
 

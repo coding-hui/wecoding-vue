@@ -5,16 +5,16 @@
         <a-button type="primary" @click="handleCreate"> {{ t('common.title.add') }} </a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'name'">
+        <template v-if="column.key === 'name'">
           <a @click="handleToDictData(record)" :title="record.type">
             {{ record.name }}
           </a>
         </template>
-        <template v-else-if="column.dataIndex === 'type'">
+        <template v-else-if="column.key === 'type'">
           <span v-text="record.type"></span>
           <CopyTwoTone class="ml-1" @click="handleCopy(record.type)" />
         </template>
-        <template v-else-if="column.dataIndex === 'action'">
+        <template v-else-if="column.key === 'action'">
           <TableAction
             :actions="[
               {

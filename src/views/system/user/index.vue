@@ -7,14 +7,14 @@
         </a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'avatar'">
+        <template v-if="column.key === 'avatar'">
           <img
             class="user-avatar"
             :src="record.avatar"
             @click="handlePreviewAvatar(record.avatar)"
           />
         </template>
-        <template v-else-if="column.dataIndex === 'action'">
+        <template v-else-if="column.key === 'action'">
           <TableAction
             :actions="[
               {
